@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import bathroom from "@/assets/bathroom.jpeg";
+import bathroom from "@/assets/Bathroom.jpeg";
 import door from "@/assets/Doors2.jpeg";
-import kitchen from "@/assets/kitchen.jpeg";
+import kitchen from "@/assets/Kitchen.jpeg";
 import furniture from "@/assets/furniture.jpeg";
 import { Link } from "@tanstack/react-router"; // Ensure Link is imported from TanStack Router
 
