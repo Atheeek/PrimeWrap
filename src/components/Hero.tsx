@@ -28,19 +28,20 @@ const Hero = () => {
         
 
           <h1 className="text-4xl sm:text-5xl md:text-[4rem] font-bold leading-[1.1] tracking-tight">
-            Your Dream Space,
+           Elevate Your Space,
+
           </h1>
           
           <div 
             className="text-[3rem] sm:text-[4rem] md:text-[5.5rem] text-[#F39C4B] mt-[-10px] sm:mt-[-15px] md:mt-[-25px] ml-2 sm:ml-4 md:ml-8 transform -rotate-2 drop-shadow-md select-none"
             style={{ fontFamily: "'Great Vibes', cursive, 'Brush Script MT'" }}
           >
-            Transformed
+            Elegantly
           </div>
 
           <p className="mt-4 sm:mt-6 text-sm sm:text-lg md:text-xl text-gray-300 max-w-md leading-relaxed">
-            Discover the endless possibilities of architectural vinyl wrapping, 
-            and elevate your environment without breaking the bank.
+             From kitchens and cabinets to commercial interiors, we transform spaces
+  with premium vinyl wraps—fast, affordable, and built to last.
           </p>
 
           <div className="mt-8 flex items-center gap-4">
