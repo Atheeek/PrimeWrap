@@ -226,13 +226,13 @@ export const ServicesSection = () => {
                     <p className="text-gray-500 text-sm leading-relaxed mb-5">
                       {service.desc}
                     </p>
-                    <a 
+                    {/* <a 
                       href={service.href} 
                       className="text-orange-500 font-bold flex items-center justify-end gap-2 text-xs uppercase tracking-widest hover:text-orange-600 transition-colors group/link"
                     >
                       Explore Service 
                       <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-                    </a>
+                    </a> */}
                   </motion.div>
                 </div>
 

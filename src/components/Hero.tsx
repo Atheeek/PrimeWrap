@@ -40,8 +40,8 @@ const Hero = () => {
           </div>
 
           <p className="mt-4 sm:mt-6 text-sm sm:text-lg md:text-xl text-gray-300 max-w-md leading-relaxed">
-             From kitchens and cabinets to commercial interiors, we transform spaces
-  with premium vinyl wraps—fast, affordable, and built to last.
+            Discover the endless possibilities of architectural vinyl wrapping, 
+            and elevate your environment without breaking the bank.
           </p>
 
           <div className="mt-8 flex items-center gap-4">
