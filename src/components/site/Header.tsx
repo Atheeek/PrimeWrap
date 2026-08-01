@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, ReactElement } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, ArrowRight, BookOpen } from "lucide-react";
 
@@ -93,20 +93,18 @@ const KineticLink = ({ children, to, isScrolled }: { children: string; to: strin
    Main Component
 --------------------------------------------------------- */
 export function Header() {
+  const location = useLocation();
+  const isHome = location.pathname === "/"; // Determine if we are on the homepage
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  // FIX #4: track desktop breakpoint in JS so the letter-by-letter
-  // KineticLink nav (and its ~50+ motion.span nodes) never mounts on
-  // mobile at all. `hidden lg:flex` only hides it visually — React and
-  // Framer Motion still create/track every node underneath it.
   const [isDesktop, setIsDesktop] = useState(false);
 
-  // Hook into scroll to trigger dynamic island morphing
+  // Helper boolean to force dark text on non-home pages
+  const useDarkTheme = isScrolled || mobileMenuOpen || !isHome;
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
-    // FIX #3: mark the listener passive so the compositor thread doesn't
-    // have to wait on this handler before it can scroll — this alone
-    // removes a common source of mobile scroll jank.
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -119,7 +117,6 @@ export function Header() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "unset";
@@ -132,12 +129,6 @@ export function Header() {
         style={{ paddingTop: isScrolled ? "1.5rem" : "0" }}
       >
         <div
-          // FIX #2: transition-all -> a specific property list. transition-all
-          // makes the browser watch and animate every CSS property change
-          // (including layout ones) on a fixed, backdrop-blurred element on
-          // every scroll toggle. will-change hints the browser to promote
-          // this pill to its own GPU layer ahead of time instead of
-          // re-computing it from scratch each frame.
           className={`pointer-events-auto flex items-center justify-between transition-[width,max-width,padding,background-color,border-color,box-shadow,border-radius] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[width,padding] ${
             isScrolled
               ? "w-[95%] md:w-[85%] max-w-[1100px] bg-white/30 backdrop-blur-2xl border border-white/40 shadow-[0_12px_40px_rgba(20,35,70,0.1)] rounded-[2rem] px-6 py-3"
@@ -147,11 +138,10 @@ export function Header() {
           
           {/* ===================== BRANDING ===================== */}
           <Link to="/" className="flex items-center gap-3 z-50 group">
-            
             <div className="flex flex-col pt-3 overflow-hidden">
               <span 
                 className={`text-lg font-bold leading-none tracking-tight transition-colors duration-500 ${
-                  isScrolled || mobileMenuOpen ? "text-[#142346]" : "text-white"
+                  useDarkTheme ? "text-[#142346]" : "text-white"
                 }`} 
                 style={raleway}
               >
@@ -164,13 +154,15 @@ export function Header() {
           </Link>
 
           {/* ===================== DESKTOP NAVIGATION ===================== */}
-          {/* FIX #4: only mounted when isDesktop is true, instead of always
-              mounting ~50+ animated letter spans and just hiding them with CSS */}
           {isDesktop && (
             <div className="hidden lg:flex items-center gap-6">
               <nav className="flex items-center gap-8">
                 {navLinks.map((link) => (
-                  <KineticLink key={link.name} to={link.path} isScrolled={isScrolled}>
+                  <KineticLink 
+                    key={link.name} 
+                    to={link.path} 
+                    isScrolled={isScrolled || !isHome} // Force dark text if not on home
+                  >
                     {link.name}
                   </KineticLink>
                 ))}
@@ -181,7 +173,7 @@ export function Header() {
                   <a
                     href="#catalog"
                     className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 ${
-                      isScrolled 
+                      (isScrolled || !isHome)
                         ? "bg-gray-100 text-[#142346] hover:bg-orange-50 hover:text-orange-500" 
                         : "bg-white/10 text-white hover:bg-white hover:text-[#142346]"
                     }`}
@@ -196,9 +188,7 @@ export function Header() {
                     href="#book"
                     className="group relative overflow-hidden bg-[#142346] text-white px-7 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-xl flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
                   >
-                    {/* Glowing Hover Effect Layer */}
-                    <div className="absolute inset-0  opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <span className="relative z-10">Book Viewing</span>
                     <ArrowRight className="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
                   </a>
@@ -211,7 +201,7 @@ export function Header() {
           <Magnetic>
             <button
               className={`lg:hidden relative z-[100] w-12 h-12 flex items-center justify-center rounded-full transition-colors duration-300 ${
-                isScrolled || mobileMenuOpen 
+                useDarkTheme 
                   ? "bg-white/30 text-[#142346]" 
                   : "bg-white/10 text-white backdrop-blur-sm"
               }`}
@@ -239,17 +229,6 @@ export function Header() {
             transition={{ type: "spring", stiffness: 30, restDelta: 2 }}
             className="fixed inset-0 bg-[#efeeea] z-[90] lg:hidden flex flex-col justify-center px-8 will-change-[clip-path]"
           >
-            {/*
-              FIX #1: the two "accent" divs below originally rendered
-                <div className="... blur-3xl rounded-full pointer-events-none" />
-              with NO background color class (just a stray "b" typo), so they
-              were 100% invisible — yet the browser still had to run a full
-              384x384px blur-3xl GPU filter pass for each one, every frame,
-              while the menu was open. That's one of the heaviest CSS filters
-              on mobile. Since nothing was ever visibly rendered, removing
-              them is a zero-risk, zero-visual-change win. (Deleted here.)
-            */}
-
             <nav className="flex flex-col gap-6 relative z-10">
               {navLinks.map((link, idx) => (
                 <motion.div

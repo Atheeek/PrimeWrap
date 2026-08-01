@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
+// Removed unused hooks: useState, useEffect, useRef
 import { Flame, Wallet, Award, ChevronLeft, ChevronRight, Star, Upload, ClipboardList, Ruler, ClipboardCheck, CalendarCheck, Eye, ChefHat, DoorOpen, Bath } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
 import AboutOurWrap from "@/components/AboutOurWrap";
 import Hero from '@/components/Hero';
 import TrustedPartners from "@/components/TrustedPartners";
@@ -26,6 +26,8 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+// Note: If you aren't using brands, wraps, reviews, steps, and services in this specific file, 
+// you should delete those arrays too. I left them in case they are used in components you didn't show.
 const brands = ["Rotana", "% Arabica", "EMAAR", "DAMAC", "Emirates"];
 
 const wraps = [
@@ -57,42 +59,9 @@ const services = [
 ];
 
 function Home() {
-  const [gIdx, setGIdx] = useState(0);
-  const [footerHeight, setFooterHeight] = useState(0);
-  const footerRef = useRef<HTMLDivElement | null>(null);
-  
-  const gallery = [
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80",
-  ];
-
-  // Defensive programming: Use ResizeObserver to ensure the margin matches the footer 
-  // exactly, even if content wraps or screen orientation changes.
-  useEffect(() => {
-    if (footerRef.current) {
-      const resizeObserver = new ResizeObserver((entries) => {
-        setFooterHeight(entries[0].contentRect.height);
-      });
-      resizeObserver.observe(footerRef.current);
-      
-      return () => resizeObserver.disconnect();
-    }
-  }, []);
-
   return (
-    <div className="bg-[#142346]"> {/* Base background matches your footer to prevent visual flashing */}
-      
-      {/* 
-        MAIN CONTENT FOREGROUND
-        By applying a bottom margin equal to the footer's height, 
-        we allow the user to scroll exactly far enough to reveal the fixed footer behind it.
-      */}
-      <main 
-        className="relative z-10 bg-white "
-        style={{ marginBottom: `${footerHeight}px` }}
-      >
+    <div className="flex flex-col min-h-screen bg-white">
+      <main className="flex-grow z-10 bg-white">
         <Header />
         <Hero />
         <AboutOurWrap />
@@ -101,24 +70,12 @@ function Home() {
         <CheckOurWork />
         <Testimonials />
         <BookNow />
-
-        {/* HOW WE DO IT */}
-       <HowWeDoIt />
-
-    {/* SERVICES */}
-<ServicesSection />
+        <HowWeDoIt />
+        <ServicesSection />
       </main>
 
-      {/* 
-        STICKY REVEAL FOOTER 
-        Positioned strictly behind the main content. 
-      */}
-      <div 
-        ref={footerRef} 
-        className="fixed bottom-0 left-0 w-full z-0"
-      >
-        <Footer />
-      </div>
+      {/* The Footer handles its own sticky logic now. No wrappers needed. */}
+      <Footer />
 
       <FloatingWhatsApp />
     </div>

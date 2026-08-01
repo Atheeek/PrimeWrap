@@ -65,7 +65,7 @@ const WhatWeWrap = () => {
         </div>
 
         {/* Slideshow Container */}
-        <div className="relative border-[12px] md:border-[20px] border-white mx-auto max-w-[1000px] shadow-2xl rounded-sm aspect-[16/10] overflow-hidden bg-gray-200">
+        <div className="relative border-[6px] md:border-[20px] border-white mx-auto max-w-[1000px] shadow-2xl rounded-sm aspect-[16/10] overflow-hidden bg-gray-200">
           
           {slides.map((slide, index) => {
             const isActive = index === currentSlide;
@@ -104,7 +104,7 @@ const WhatWeWrap = () => {
                         {pin.label}
                       </span>
                       <span className="w-px h-6 md:h-8 bg-[#142346]/80" />
-                      <span className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-orange-500 ring-4 ring-orange-500/30 shadow-md" />
+                      <span className="w-1 h-1 md:w-2 md:h-2 rounded-full bg-orange-500 ring-4 ring-orange-500/30 shadow-md" />
                     </div>
                   </div>
                 ))}
