@@ -1,0 +1,192 @@
+import { useState, useRef, MouseEvent, TouchEvent } from "react";
+import { ChevronLeft, ChevronRight, GripVertical } from "lucide-react";
+import doors from "@/assets/doors.jpeg";
+import doors2 from "@/assets/doors2.jpeg";
+
+/* ---------------------------------------------------------
+   Configuration
+--------------------------------------------------------- */
+const raleway = { fontFamily: "'Raleway', sans-serif" };
+
+// Replace these with your actual before/after pairs. 
+// They MUST be the exact same aspect ratio and angle for the effect to work perfectly.
+const projects = [
+  {
+    id: 1,
+    title: "The Marina Kitchen",
+    description: "Complete transformation from dated dark wood to a modern, light-reflecting matte white finish. Executed in 48 hours.",
+    before: doors,
+    after: doors2,
+  },
+  {
+    id: 2,
+    title: "Corporate Boardroom",
+    description: "Refaced heavily worn meeting tables with an industrial brushed steel architectural film. Zero downtime for the client.",
+    before: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
+    after: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: 3,
+    title: "Jumeirah Vanity",
+    description: "Upgraded a standard builder-grade bathroom vanity into a seamless, water-resistant concrete finish.",
+    before: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80",
+    after: "https://images.unsplash.com/photo-1620626011761-9ea225946452?auto=format&fit=crop&w=1200&q=80",
+  }
+];
+
+const CheckOurWork = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const [isDragging, setIsDragging] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const activeProject = projects[activeIndex];
+
+  // --- Slider Logic ---
+  const handleMove = (clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    const percentage = (x / rect.width) * 100;
+    setSliderPosition(percentage);
+  };
+
+  const onMouseMove = (e: MouseEvent) => {
+    if (!isDragging) return;
+    handleMove(e.clientX);
+  };
+
+  const onTouchMove = (e: TouchEvent) => {
+    if (!isDragging) return;
+    handleMove(e.touches[0].clientX);
+  };
+
+  // --- Navigation Logic ---
+  const goNext = () => {
+    setActiveIndex((prev) => (prev + 1) % projects.length);
+    setSliderPosition(50); // Reset slider on change
+  };
+
+  const goPrev = () => {
+    setActiveIndex((prev) => (prev - 1 + projects.length) % projects.length);
+    setSliderPosition(50);
+  };
+
+  return (
+    <section className="py-24 px-4 md:px-8 bg-white overflow-hidden">
+      <div className="max-w-[1400px] mx-auto">
+        
+        {/* Editorial Header */}
+        <div className="flex items-center gap-4 mb-16">
+          <span className="h-[2px] w-12 bg-orange-500" />
+          <h2 
+            className="text-3xl md:text-4xl font-bold text-[#142346] tracking-tight uppercase" 
+            style={raleway}
+          >
+            Check Our Work
+          </h2>
+          <span className="h-[2px] flex-1 bg-gray-200" />
+        </div>
+
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          
+          {/* Left Column: Project Details & Navigation */}
+          <div className="lg:col-span-4 flex flex-col h-full justify-between order-2 lg:order-1">
+            <div>
+              <div className="text-orange-500 font-bold tracking-widest text-sm mb-4">
+                PROJECT {String(activeIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+              </div>
+              <h3 
+                className="text-4xl lg:text-5xl font-bold text-[#142346] leading-[1.1] mb-6" 
+                style={raleway}
+              >
+                {activeProject.title}
+              </h3>
+              <p className="text-gray-500 text-lg leading-relaxed">
+                {activeProject.description}
+              </p>
+            </div>
+
+            {/* Mechanical Navigation Controls */}
+            <div className="flex items-center gap-4 mt-12">
+              <button 
+                onClick={goPrev}
+                aria-label="Previous project"
+                className="w-14 h-14 rounded-full border-2 border-[#142346] text-[#142346] flex items-center justify-center hover:bg-[#142346] hover:text-white transition-all active:scale-95"
+              >
+                <ChevronLeft className="w-6 h-6 -ml-0.5" />
+              </button>
+              <button 
+                onClick={goNext}
+                aria-label="Next project"
+                className="w-14 h-14 rounded-full bg-orange-500 text-white flex items-center justify-center hover:bg-orange-600 transition-all active:scale-95 shadow-[0_8px_20px_rgba(249,115,22,0.3)]"
+              >
+                <ChevronRight className="w-6 h-6 ml-0.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column: Interactive Comparison Engine */}
+          <div className="lg:col-span-8 order-1 lg:order-2">
+            <div 
+              ref={containerRef}
+              className="relative w-full aspect-[4/3] md:aspect-[16/9] bg-gray-200 overflow-hidden cursor-ew-resize select-none shadow-[0_20px_50px_rgba(20,35,70,0.15)] group"
+              onMouseDown={() => setIsDragging(true)}
+              onMouseUp={() => setIsDragging(false)}
+              onMouseLeave={() => setIsDragging(false)}
+              onMouseMove={onMouseMove}
+              onTouchStart={() => setIsDragging(true)}
+              onTouchEnd={() => setIsDragging(false)}
+              onTouchMove={onTouchMove}
+            >
+              {/* BEFORE Image (Base Layer) */}
+              <img 
+                src={activeProject.before} 
+                alt="Before wrapping" 
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              />
+              
+              {/* BEFORE Label */}
+              <div className="absolute top-6 right-6 bg-black/60 backdrop-blur-md text-white text-xs font-bold tracking-widest px-4 py-2 uppercase">
+                Before
+              </div>
+
+              {/* AFTER Image (Top Layer clipped by slider) */}
+              <div 
+                className="absolute inset-0 w-full h-full pointer-events-none"
+                style={{ clipPath: `polygon(0 0, ${sliderPosition}% 0, ${sliderPosition}% 100%, 0 100%)` }}
+              >
+                <img 
+                  src={activeProject.after} 
+                  alt="After wrapping" 
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                {/* AFTER Label */}
+                <div className="absolute top-6 left-6 bg-orange-500 text-white text-xs font-bold tracking-widest px-4 py-2 uppercase">
+                  After
+                </div>
+              </div>
+
+              {/* Slider Handle (The physical line & grip) */}
+              <div 
+                className="absolute top-0 bottom-0 w-1 bg-white shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-none transition-transform duration-75"
+                style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
+              >
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-[#142346] group-hover:scale-110 transition-transform">
+                  <GripVertical className="w-5 h-5" />
+                </div>
+              </div>
+            </div>
+            
+            <p className="text-center text-xs text-gray-400 mt-4 font-bold tracking-widest uppercase lg:hidden">
+              Drag to compare
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default CheckOurWork;
