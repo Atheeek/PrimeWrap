@@ -13,6 +13,7 @@ const navLinks = [
   { name: "About", path: "/about" },
   { name: "Services", path: "/services" },
   { name: "Contact", path: "/contact" },
+  { name: "Gallery", path: "/gallery" },
 ];
 
 const Magnetic = ({ children }: { children: ReactElement }) => {
@@ -94,12 +95,28 @@ const KineticLink = ({ children, to, isScrolled }: { children: string; to: strin
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // FIX #4: track desktop breakpoint in JS so the letter-by-letter
+  // KineticLink nav (and its ~50+ motion.span nodes) never mounts on
+  // mobile at all. `hidden lg:flex` only hides it visually — React and
+  // Framer Motion still create/track every node underneath it.
+  const [isDesktop, setIsDesktop] = useState(false);
 
   // Hook into scroll to trigger dynamic island morphing
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", handleScroll);
+    // FIX #3: mark the listener passive so the compositor thread doesn't
+    // have to wait on this handler before it can scroll — this alone
+    // removes a common source of mobile scroll jank.
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)"); // lg breakpoint
+    setIsDesktop(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, []);
 
   // Lock body scroll when mobile menu is open
@@ -115,7 +132,13 @@ export function Header() {
         style={{ paddingTop: isScrolled ? "1.5rem" : "0" }}
       >
         <div
-          className={`pointer-events-auto flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          // FIX #2: transition-all -> a specific property list. transition-all
+          // makes the browser watch and animate every CSS property change
+          // (including layout ones) on a fixed, backdrop-blurred element on
+          // every scroll toggle. will-change hints the browser to promote
+          // this pill to its own GPU layer ahead of time instead of
+          // re-computing it from scratch each frame.
+          className={`pointer-events-auto flex items-center justify-between transition-[width,max-width,padding,background-color,border-color,box-shadow,border-radius] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[width,padding] ${
             isScrolled
               ? "w-[95%] md:w-[85%] max-w-[1100px] bg-white/30 backdrop-blur-2xl border border-white/40 shadow-[0_12px_40px_rgba(20,35,70,0.1)] rounded-[2rem] px-6 py-3"
               : "w-full max-w-[1400px] bg-transparent px-6 md:px-12 py-6 border-transparent"
@@ -134,51 +157,55 @@ export function Header() {
               >
                 Wrap It
               </span>
-              <span className="text-[10px] font-bold text-orange-500 uppercase tracking-widest mt-0.5">
+              <span className="text-[10px] font-bold text-[#F39C4B] uppercase tracking-widest mt-0.5">
                 Studio
               </span>
             </div>
           </Link>
 
           {/* ===================== DESKTOP NAVIGATION ===================== */}
-          <div className="hidden lg:flex items-center gap-6">
-            <nav className="flex items-center gap-8">
-              {navLinks.map((link) => (
-                <KineticLink key={link.name} to={link.path} isScrolled={isScrolled}>
-                  {link.name}
-                </KineticLink>
-              ))}
-            </nav>
+          {/* FIX #4: only mounted when isDesktop is true, instead of always
+              mounting ~50+ animated letter spans and just hiding them with CSS */}
+          {isDesktop && (
+            <div className="hidden lg:flex items-center gap-6">
+              <nav className="flex items-center gap-8">
+                {navLinks.map((link) => (
+                  <KineticLink key={link.name} to={link.path} isScrolled={isScrolled}>
+                    {link.name}
+                  </KineticLink>
+                ))}
+              </nav>
 
-            <div className="flex items-center gap-4 ml-6 pl-6 border-l border-gray-300/30">
-              <Magnetic>
-                <a
-                  href="#catalog"
-                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 ${
-                    isScrolled 
-                      ? "bg-gray-100 text-[#142346] hover:bg-orange-50 hover:text-orange-500" 
-                      : "bg-white/10 text-white hover:bg-white hover:text-[#142346]"
-                  }`}
-                  aria-label="View Catalog"
-                >
-                  <BookOpen className="w-4 h-4" />
-                </a>
-              </Magnetic>
-              
-              <Magnetic>
-                <a
-                  href="#book"
-                  className="group relative overflow-hidden bg-[#142346] text-white px-7 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-xl flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
-                >
-                  {/* Glowing Hover Effect Layer */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  <span className="relative z-10">Book Viewing</span>
-                  <ArrowRight className="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
-                </a>
-              </Magnetic>
+              <div className="flex items-center gap-4 ml-6 pl-6 border-l border-gray-300/30">
+                <Magnetic>
+                  <a
+                    href="#catalog"
+                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 ${
+                      isScrolled 
+                        ? "bg-gray-100 text-[#142346] hover:bg-orange-50 hover:text-orange-500" 
+                        : "bg-white/10 text-white hover:bg-white hover:text-[#142346]"
+                    }`}
+                    aria-label="View Catalog"
+                  >
+                    <BookOpen className="w-4 h-4" />
+                  </a>
+                </Magnetic>
+                
+                <Magnetic>
+                  <a
+                    href="#book"
+                    className="group relative overflow-hidden bg-[#142346] text-white px-7 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-xl flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
+                  >
+                    {/* Glowing Hover Effect Layer */}
+                    <div className="absolute inset-0  opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    <span className="relative z-10">Book Viewing</span>
+                    <ArrowRight className="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
+                  </a>
+                </Magnetic>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* ===================== MOBILE TOGGLE ===================== */}
           <Magnetic>
@@ -210,11 +237,18 @@ export function Header() {
             animate={{ clipPath: "circle(150% at calc(100% - 48px) 48px)" }}
             exit={{ clipPath: "circle(0px at calc(100% - 48px) 48px)" }}
             transition={{ type: "spring", stiffness: 30, restDelta: 2 }}
-            className="fixed inset-0 bg-[#efeeea] z-[90] lg:hidden flex flex-col justify-center px-8"
+            className="fixed inset-0 bg-[#efeeea] z-[90] lg:hidden flex flex-col justify-center px-8 will-change-[clip-path]"
           >
-            {/* Background Accent Graphics */}
-            <div className="absolute top-1/4 -right-24 w-96 h-96 b blur-3xl rounded-full pointer-events-none" />
-            <div className="absolute bottom-1/4 -left-24 w-96 h-96  blur-3xl rounded-full pointer-events-none" />
+            {/*
+              FIX #1: the two "accent" divs below originally rendered
+                <div className="... blur-3xl rounded-full pointer-events-none" />
+              with NO background color class (just a stray "b" typo), so they
+              were 100% invisible — yet the browser still had to run a full
+              384x384px blur-3xl GPU filter pass for each one, every frame,
+              while the menu was open. That's one of the heaviest CSS filters
+              on mobile. Since nothing was ever visibly rendered, removing
+              them is a zero-risk, zero-visual-change win. (Deleted here.)
+            */}
 
             <nav className="flex flex-col gap-6 relative z-10">
               {navLinks.map((link, idx) => (
@@ -262,7 +296,7 @@ export function Header() {
               <a
                 href="#book"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between w-full bg-orange-500 text-white px-6 py-5 rounded-2xl text-sm font-bold uppercase tracking-widest shadow-xl active:scale-[0.98] transition-transform"
+                className="flex items-center justify-between w-full bg-[#F39C4B] text-white px-6 py-5 rounded-2xl text-sm font-bold uppercase tracking-widest shadow-xl active:scale-[0.98] transition-transform"
               >
                 Book a Viewing
                 <ArrowRight className="w-5 h-5 text-white/80" />

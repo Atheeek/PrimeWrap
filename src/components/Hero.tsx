@@ -44,7 +44,7 @@ const Hero = () => {
           </p>
 
           <div className="mt-8 flex items-center gap-4">
-            <button className="px-6 sm:px-8 py-3.5 bg-orange-500 hover:bg-[#e0893b] text-white rounded-xl font-bold text-sm sm:text-base transition-all duration-300  hover:-translate-y-0.5 active:scale-95">
+            <button className="px-6 sm:px-8 py-3.5 bg-[#F39C4B] hover:bg-[#e0893b] text-white rounded-xl font-bold text-sm sm:text-base transition-all duration-300  hover:-translate-y-0.5 active:scale-95">
               Book A Viewing
             </button>
           </div>
