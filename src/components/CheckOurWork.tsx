@@ -1,7 +1,7 @@
 import { useState, useRef, MouseEvent, TouchEvent } from "react";
 import { ChevronLeft, ChevronRight, GripVertical } from "lucide-react";
-import doors from "@/assets/doors.jpeg";
-import doors2 from "@/assets/doors2.jpeg";
+import doors from "@/assets/Doors.jpeg";
+import doors2 from "@/assets/Doors2.jpeg";
 
 /* ---------------------------------------------------------
    Configuration

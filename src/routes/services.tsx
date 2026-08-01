@@ -5,10 +5,10 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
 import { ArrowRight } from "lucide-react";
-import bathroom from "@/assets/bathroom.jpeg";
+import bathroom from "@/assets/Bathroom.jpeg";
 import door from "@/assets/Doors2.jpeg";
-import kitchen from "@/assets/kitchen.jpeg";
-import wardrobe from "@/assets/wardrobe.jpeg";
+import kitchen from "@/assets/Kitchen.jpeg";
+import wardrobe from "@/assets/Wardrobe.jpeg";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [

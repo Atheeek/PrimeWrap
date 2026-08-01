@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import kitchen from "@/assets/kitchen.jpeg";
-import doors from "@/assets/doors2.jpeg";
+import kitchen from "@/assets/Kitchen.jpeg";
+import doors from "@/assets/Doors2.jpeg";
 /* ---------------------------------------------------------
    Data Structure
    Each slide MUST have its own specific pins. 
