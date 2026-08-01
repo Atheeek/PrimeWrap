@@ -15,9 +15,6 @@ const navLinks = [
   { name: "Contact", path: "/contact" },
 ];
 
-/* ---------------------------------------------------------
-   Engine 1: Magnetic Spring Physics (Hover.dev / 21st.dev)
---------------------------------------------------------- */
 const Magnetic = ({ children }: { children: ReactElement }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
