@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import bathroom from "@/assets/Bathroom.jpeg";
+import bathroom from "@/assets/bathroom.jpeg";
 import door from "@/assets/Doors2.jpeg";
 import kitchen from "@/assets/Kitchen.jpeg";
 import furniture from "@/assets/furniture.jpeg";
