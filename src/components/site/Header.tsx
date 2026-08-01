@@ -44,9 +44,6 @@ const Magnetic = ({ children }: { children: ReactElement }) => {
   );
 };
 
-/* ---------------------------------------------------------
-   Engine 2: Staggered Kinetic Typography (Hover.dev)
---------------------------------------------------------- */
 const KineticLink = ({ children, to, isScrolled }: { children: string; to: string; isScrolled: boolean }) => {
   return (
     <Link to={to} className="relative block overflow-hidden uppercase tracking-widest text-sm font-bold">
