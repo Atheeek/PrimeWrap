@@ -1,182 +1,392 @@
-import { useEffect, useRef, useState } from "react";
-import { 
-  ClipboardList, 
-  Ruler, 
-  ClipboardCheck, 
-  CalendarCheck, 
-  Eye 
+import {
+  MessageSquareDashed,
+  PencilRuler,
+  ScrollText,
+  CalendarClock,
+  PaintRoller,
 } from "lucide-react";
 
-/* ---------------------------------------------------------
-   Configuration
---------------------------------------------------------- */
-const raleway = { fontFamily: "'Raleway', sans-serif" };
-
 const steps = [
-  { 
-    icon: ClipboardList, 
-    title: "Consultation", 
-    desc: "We understand your vision and space requirements." 
+  {
+    num: "01",
+    title: "Consultation",
+    desc: "We understand your vision and space requirements to craft a tailored solution.",
+    icon: MessageSquareDashed,
+    meta: "CONSULT • DISCOVER • DEFINE",
   },
-  { 
-    icon: Ruler, 
-    title: "Measure & Design", 
-    desc: "Precise measurements and material selection." 
+  {
+    num: "02",
+    title: "Measure & Design",
+    desc: "Precise measurements and premium material selection from our extensive catalog.",
+    icon: PencilRuler,
+    meta: "MEASURE • DESIGN • SELECT",
   },
-  { 
-    icon: ClipboardCheck, 
-    title: "Proposal", 
-    desc: "Transparent quote with samples for approval." 
+  {
+    num: "03",
+    title: "Proposal",
+    desc: "Transparent quotation with samples for your absolute approval before we begin.",
+    icon: ScrollText,
+    meta: "PROPOSE • REVIEW • APPROVE",
   },
-  { 
-    icon: CalendarCheck, 
-    title: "Schedule", 
-    desc: "We book a time that suits your schedule." 
+  {
+    num: "04",
+    title: "Schedule",
+    desc: "We book a convenient installation time that suits your busy schedule seamlessly.",
+    icon: CalendarClock,
+    meta: "PLAN • SCHEDULE • PREPARE",
   },
-  { 
-    icon: Eye, 
-    title: "Installation", 
-    desc: "Meticulous install with a final walkthrough." 
+  {
+    num: "05",
+    title: "Installation",
+    desc: "Meticulous installation by our experts, finishing with a thorough walkthrough.",
+    icon: PaintRoller,
+    meta: "INSTALL • FINISH • DELIVER",
   },
 ];
 
 const HowWeDoIt = () => {
-  const [activeMobileStep, setActiveMobileStep] = useState(0);
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  // Scroll Spy Engine: Detects which step is in the middle of the screen
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = Number(entry.target.getAttribute("data-index"));
-            setActiveMobileStep(index);
-          }
-        });
-      },
-      { 
-        // Triggers when the element hits the middle 40% of the screen
-        rootMargin: "-40% 0px -40% 0px" 
-      } 
-    );
-
-    stepRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section className="py-24 px-4 md:px-8 bg-white overflow-hidden">
-      <div className="max-w-[1400px] mx-auto">
-        
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-16 md:mb-24">
-          <span className="h-[2px] w-12 bg-orange-500" />
-          <h2 
-            className="text-3xl md:text-4xl font-bold text-[#142346] tracking-tight uppercase" 
-            style={raleway}
-          >
-            How We Do It
-          </h2>
-          <span className="h-[2px] flex-1 bg-gray-200" />
-        </div>
+    <section className="relative bg-[#efeeea] font-display selection:bg-orange selection:text-white pt-24 pb-8 md:pt-32">
+      <div className="mx-auto max-w-[1600px] px-6 md:px-12">
+        <div className="flex flex-col items-start gap-12 lg:flex-row lg:gap-24">
 
-        {/* Industrial Timeline Grid */}
-        <div className="relative">
-          
-          {/* Static Background Track (Desktop) */}
-          <div className="hidden md:block absolute top-[4.5rem] left-0 right-0 h-[2px] bg-gray-100" />
+          {/* =====================================================
+              LEFT COLUMN — STICKY INTRO
+          ====================================================== */}
+          <div className="z-20 flex w-full flex-col justify-start lg:sticky lg:top-32 lg:w-1/3">
+            <div className="mb-8 flex items-center gap-4">
+              <span className="h-px w-8 bg-orange" />
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-6 relative">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-orange">
+                Our Process
+              </span>
+            </div>
+
+            <h2 className="mb-8 text-5xl font-semibold uppercase leading-[0.9] tracking-tighter text-navy md:text-7xl">
+              From Idea
+              <br />
+              <span className="text-gray-400">To Finish.</span>
+            </h2>
+
+            <p className="max-w-sm text-lg font-light leading-relaxed text-gray-500">
+              Every project follows a considered process — from understanding
+              the space to the final meticulous installation.
+            </p>
+
+            {/* Small editorial detail */}
+            <div className="mt-10 hidden border-t border-navy/10 pt-5 lg:block">
+              <div className="flex items-center justify-between text-[9px] font-semibold uppercase tracking-[0.25em] text-navy/30">
+                <span>PrimeWrap Studio</span>
+                <span>Process / 05</span>
+              </div>
+            </div>
+          </div>
+
+          {/* =====================================================
+              RIGHT COLUMN — STICKY STACK
+          ====================================================== */}
+          <div className="relative w-full pb-24 md:pb-48 lg:w-2/3">
             {steps.map((step, index) => {
-              const isActive = activeMobileStep === index;
+              const Icon = step.icon;
 
               return (
-                <div 
-                  key={step.title} 
-                  data-index={index}
-                  ref={(el) => { stepRefs.current[index] = el; }}
-                  className="relative flex flex-row md:flex-col group"
+                <div
+                  key={step.title}
+                  className="sticky top-28 flex w-full justify-center md:top-32"
+                  style={{
+                    zIndex: index + 1,
+                  }}
                 >
-                  
-                  {/* 
-                    Mobile Layout: Vertical Line 
-                    Uses max-md classes to trigger styles based on Scroll Spy
-                  */}
-                  <div className="flex flex-col items-center mr-6 md:hidden">
-                    <div 
-                      className={`text-3xl font-bold transition-colors duration-300 text-gray-200 ${
-                        isActive ? "max-md:text-orange-500" : ""
-                      }`} 
-                      style={raleway}
-                    >
-                      0{index + 1}
-                    </div>
-                    {index !== steps.length - 1 && (
-                      <div 
-                        className={`w-[2px] h-full mt-2 transition-colors duration-300 bg-gray-100 ${
-                          isActive ? "max-md:bg-orange-500" : ""
-                        }`} 
-                      />
-                    )}
-                  </div>
+                  {/* =================================================
+                      STACKING SPACE
+                  ================================================== */}
+                  <div className="flex h-[55vh] w-full items-start pt-8 md:h-[60vh]">
 
-                  {/* 
-                    Desktop Layout: Step Number & Node 
-                    Relies solely on group-hover, ignoring scroll state
-                  */}
-                  <div className="hidden md:block">
-                    <div 
-                      className="text-5xl font-bold text-gray-100 md:group-hover:text-orange-500 transition-colors duration-500 mb-6" 
-                      style={raleway}
+                    {/* =================================================
+                        CARD
+                    ================================================== */}
+                    <article
+                      className="
+                        group
+                        relative
+                        flex
+                        h-full
+                        w-full
+                        overflow-hidden
+                        border
+                        border-navy/[0.08]
+                        bg-white
+                        shadow-[0_-12px_45px_rgba(20,35,70,0.07)]
+                        transition-all
+                        duration-500
+                        hover:shadow-[0_-16px_55px_rgba(20,35,70,0.11)]
+                      "
                     >
-                      0{index + 1}
-                    </div>
-                    
-                    {/* Interactive Progress Line (Fills on hover) */}
-                    {index !== steps.length - 1 && (
-                      <div className="absolute top-[4.5rem] left-6 w-full h-[2px] overflow-hidden">
-                        <div className="w-0 h-full bg-orange-500 md:group-hover:w-full transition-all duration-700 ease-out" />
+                      {/* =============================================
+                          ARCHITECTURAL GRID
+                      ============================================== */}
+                      <div
+                        className="
+                          pointer-events-none
+                          absolute
+                          inset-0
+                          opacity-40
+                        "
+                        style={{
+                          backgroundImage: `
+                            linear-gradient(
+                              to right,
+                              rgba(20,35,70,0.035) 1px,
+                              transparent 1px
+                            ),
+                            linear-gradient(
+                              to bottom,
+                              rgba(20,35,70,0.035) 1px,
+                              transparent 1px
+                            )
+                          `,
+                          backgroundSize: "48px 48px",
+                        }}
+                      />
+
+                      {/* =============================================
+                          SOFT TECHNICAL GRID — RIGHT SIDE
+                      ============================================== */}
+                      <div
+                        className="
+                          pointer-events-none
+                          absolute
+                          right-0
+                          top-0
+                          h-full
+                          w-[48%]
+                          opacity-60
+                        "
+                        style={{
+                          backgroundImage: `
+                            linear-gradient(
+                              to right,
+                              rgba(20,35,70,0.05) 1px,
+                              transparent 1px
+                            ),
+                            linear-gradient(
+                              to bottom,
+                              rgba(20,35,70,0.05) 1px,
+                              transparent 1px
+                            )
+                          `,
+                          backgroundSize: "32px 32px",
+                          maskImage:
+                            "linear-gradient(to left, black, transparent)",
+                          WebkitMaskImage:
+                            "linear-gradient(to left, black, transparent)",
+                        }}
+                      />
+
+                      {/* =============================================
+                          ORANGE ARCHITECTURAL EDGE
+                      ============================================== */}
+                      <div
+                        className="
+                          absolute
+                          bottom-0
+                          left-0
+                          top-0
+                          z-20
+                          w-[2px]
+                          origin-bottom
+                          bg-orange
+                          transition-transform
+                          duration-700
+                          ease-out
+                          group-hover:scale-y-100
+                        "
+                      />
+
+                      {/* =============================================
+                          OVERSIZED BACKGROUND NUMBER
+                      ============================================== */}
+                      <div
+                        aria-hidden="true"
+                        className="
+                          pointer-events-none
+                          absolute
+                          -bottom-12
+                          -left-4
+                          select-none
+                          text-[13rem]
+                          font-semibold
+                          leading-none
+                          tracking-[-0.08em]
+                          text-navy/[0.035]
+                          transition-transform
+                          duration-700
+                          ease-out
+                          group-hover:-translate-y-3
+                          md:-bottom-16
+                          md:text-[18rem]
+                        "
+                      >
+                        {step.num}
                       </div>
-                    )}
 
-                    {/* Node Connector */}
-                    <div className="w-5 h-5 rounded-full border-4 border-white bg-gray-200 absolute top-[4.15rem] left-1 md:group-hover:bg-orange-500 md:group-hover:border-orange-100 md:group-hover:scale-125 transition-all duration-300 z-10 shadow-sm" />
+                      {/* =============================================
+                          TOP TECHNICAL MARKERS
+                      ============================================== */}
+                      <div className="absolute right-8 top-8 z-20 flex items-center gap-4 md:right-12 md:top-10">
+                        <span className="hidden text-[9px] font-semibold uppercase tracking-[0.25em] text-navy/25 sm:block">
+                          Process
+                        </span>
+
+                        <span className="h-px w-8 bg-orange/50" />
+
+                        <span className="text-[10px] font-semibold tracking-[0.2em] text-navy/40">
+                          {step.num} / 05
+                        </span>
+                      </div>
+
+                      {/* =============================================
+                          ICON — NO BOX
+                      ============================================== */}
+                      <div
+                        className="
+                          pointer-events-none
+                          absolute
+                          right-4
+                          top-16
+                          z-10
+                          md:right-12
+                          md:top-20
+                        "
+                      >
+                        {/* secondary orange technical circle */}
+                        <div
+                          className="
+                            absolute
+                            -inset-5
+                            rounded-full
+                            border
+                            border-orange/10
+                            transition-transform
+                            duration-700
+                            group-hover:scale-110
+                          "
+                        />
+
+                        {/* icon */}
+                        <Icon
+                          strokeWidth={0.9}
+                          className="
+                            relative
+                            h-24
+                            w-24
+                            text-navy/[0.10]
+                            transition-all
+                            duration-700
+                            group-hover:-translate-y-1
+                            group-hover:text-orange/[0.18]
+                            md:h-36
+                            md:w-36
+                          "
+                        />
+                      </div>
+
+                      {/* =============================================
+                          CORNER REGISTRATION MARK
+                      ============================================== */}
+                      <div className="absolute right-8 bottom-8 z-20 md:right-12 md:bottom-10">
+                        <div className="relative h-5 w-5">
+                          <span className="absolute left-0 top-0 h-px w-5 bg-orange/50" />
+                          <span className="absolute left-0 top-0 h-5 w-px bg-orange/50" />
+                        </div>
+                      </div>
+
+                      {/* =============================================
+                          MAIN CONTENT
+                      ============================================== */}
+                      <div className="relative z-20 flex h-full w-full flex-col p-8 md:p-14 lg:p-16">
+
+                        {/* Step Label */}
+                        <div className="flex items-center gap-4">
+                          <span className="h-px w-7 bg-orange" />
+
+                          <span className="text-[9px] font-semibold uppercase tracking-[0.3em] text-gray-400">
+                            Step — {step.num}
+                          </span>
+                        </div>
+
+                        {/* Main Content */}
+                        <div className="mt-auto max-w-[650px] pb-12 md:pb-14">
+
+                          {/* Title */}
+                          <h3
+                            className="
+                              max-w-[620px]
+                              text-4xl
+                              font-semibold
+                              uppercase
+                              leading-[0.88]
+                              tracking-tighter
+                              text-navy
+                              md:text-5xl
+                              lg:text-6xl
+                            "
+                          >
+                            {step.title}
+                          </h3>
+
+                          {/* Orange divider */}
+                          <div className="my-6 flex items-center gap-3">
+                            <span className="h-[2px] w-12 bg-orange" />
+                            <span className="h-px w-20 bg-navy/10" />
+                          </div>
+
+                          {/* Description */}
+                          <p className="max-w-md text-base font-light leading-relaxed text-gray-500 md:text-xl">
+                            {step.desc}
+                          </p>
+                        </div>
+
+                        {/* =========================================
+                            BOTTOM METADATA
+                        ========================================== */}
+                        <div className="relative z-20 mt-auto hidden items-center justify-between border-t border-navy/[0.08] pt-5 md:flex">
+
+                          <div className="flex items-center gap-4">
+                            <span className="text-[9px] font-semibold uppercase tracking-[0.25em] text-navy/30">
+                              PrimeWrap Studio
+                            </span>
+
+                            <span className="h-1 w-1 rounded-full bg-orange" />
+
+                            <span className="text-[9px] font-semibold uppercase tracking-[0.25em] text-navy/30">
+                              Process Protocol
+                            </span>
+                          </div>
+
+                          <span className="text-[9px] font-semibold uppercase tracking-[0.25em] text-navy/20">
+                            {step.meta}
+                          </span>
+                        </div>
+
+                        {/* Mobile metadata */}
+                        <div className="relative z-20 flex items-center justify-between border-t border-navy/[0.08] pt-4 md:hidden">
+                          <span className="text-[8px] font-semibold uppercase tracking-[0.2em] text-navy/30">
+                            PrimeWrap
+                          </span>
+
+                          <span className="text-[8px] font-semibold uppercase tracking-[0.2em] text-navy/30">
+                            {step.num} / 05
+                          </span>
+                        </div>
+                      </div>
+                    </article>
                   </div>
-
-                  {/* Content Block (Hybrid Styling) */}
-                  <div className="pt-2 md:pt-10 flex-1">
-                    <div 
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300 bg-[#efeeea] md:group-hover:bg-[#142346] ${
-                        isActive ? "max-md:bg-[#142346]" : ""
-                      }`}
-                    >
-                      <step.icon 
-                        className={`w-6 h-6 transition-colors duration-300 text-[#142346] md:group-hover:text-white ${
-                          isActive ? "max-md:text-white" : ""
-                        }`} 
-                      />
-                    </div>
-                    <h3 
-                      className="text-xl font-bold text-[#142346] mb-3" 
-                      style={raleway}
-                    >
-                      {step.title}
-                    </h3>
-                    <p className="text-gray-500 text-sm md:text-base leading-relaxed pr-4">
-                      {step.desc}
-                    </p>
-                  </div>
-
                 </div>
               );
             })}
           </div>
         </div>
-        
       </div>
     </section>
   );

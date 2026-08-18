@@ -5,7 +5,6 @@ import { motion } from "motion/react";
 /* ---------------------------------------------------------
    Font Configuration
 --------------------------------------------------------- */
-const raleway = { fontFamily: "'Raleway', sans-serif" };
 
 export type Testimonial = {
   text: string;
@@ -50,12 +49,11 @@ export const TestimonialsColumn = (props: {
                       height={40}
                       src={image}
                       alt={name}
-                      className="h-8 w-8 md:h-10 md:w-10 rounded-full object-cover ring-2 ring-orange-500/20"
+                      className="h-8 w-8 md:h-10 md:w-10 rounded-md object-cover ring-2 ring-orange-500/20"
                     />
                     <div className="flex flex-col">
                       <div 
-                        className="font-bold tracking-tight leading-5 text-[#142346] text-sm md:text-base"
-                        style={raleway}
+                        className="font-bold tracking-tight leading-5 text-navy text-sm md:text-base"
                       >
                         {name}
                       </div>
@@ -155,14 +153,13 @@ const Testimonials = () => {
           className="flex flex-col items-center justify-center mx-auto mb-10 md:mb-14"
         >
           <div className="flex items-center justify-center gap-4">
-            <span className="h-[2px] w-12 md:w-32 bg-orange-500" />
+            <span className="h-[2px] w-12 md:w-32 bg-orange" />
             <h2 
-              style={{ ...raleway, fontWeight: 700 }} 
-              className="text-2xl md:text-[42px] text-[#142346] whitespace-nowrap"
+              className="font-bold text-2xl md:text-[42px] text-navy whitespace-nowrap"
             >
               Happy Clients
             </h2>
-            <span className="h-[2px] w-12 md:w-32 bg-orange-500" />
+            <span className="h-[2px] w-12 md:w-32 bg-orange" />
           </div>
           <p className="text-center mt-6 text-gray-500 max-w-lg text-sm md:text-base">
             Real feedback from wrap and renovation clients across the UAE.

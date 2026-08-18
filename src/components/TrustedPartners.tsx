@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
    Data
 --------------------------------------------------------- */
 const partners = [
-  { id: 1, name: "Rotana", url: "https://yallawrapit.ae/wp-content/uploads/2023/12/5-1.png" },
-  { id: 2, name: "Arabica", url: "https://yallawrapit.ae/wp-content/uploads/2023/12/6-1.png" },
-  { id: 3, name: "EMAAR", url: "https://yallawrapit.ae/wp-content/uploads/2023/12/3-1.png" },
-  { id: 4, name: "DAMAC", url: "https://yallawrapit.ae/wp-content/uploads/2023/12/4-1.png" },
-  { id: 5, name: "Emirates", url: "https://yallawrapit.ae/wp-content/uploads/2023/12/7-1.png" },
-  { id: 6, name: "Partner 6", url: "https://yallawrapit.ae/wp-content/uploads/2023/12/3-1.png" },
+  { id: 1, name: "Rotana", url: "https://primewrap.ae/wp-content/uploads/2023/12/5-1.png" },
+  { id: 2, name: "Arabica", url: "https://primewrap.ae/wp-content/uploads/2023/12/6-1.png" },
+  { id: 3, name: "EMAAR", url: "https://primewrap.ae/wp-content/uploads/2023/12/3-1.png" },
+  { id: 4, name: "DAMAC", url: "https://primewrap.ae/wp-content/uploads/2023/12/4-1.png" },
+  { id: 5, name: "Emirates", url: "https://primewrap.ae/wp-content/uploads/2023/12/7-1.png" },
+  { id: 6, name: "Partner 6", url: "https://primewrap.ae/wp-content/uploads/2023/12/3-1.png" },
 ];
 
 const TrustedPartners = () => {
@@ -46,7 +46,7 @@ const TrustedPartners = () => {
       <div className="max-w-[1400px] mx-auto text-center">
         
         {/* Heading */}
-        <h3 className="text-[#5a6b8c] text-lg md:text-xl font-light mb-10" style={{ fontFamily: "'Raleway', sans-serif" }}>
+        <h3 className="text-[#5a6b8c] text-lg md:text-xl font-light mb-10">
           Trusted by 800+ Partners...
         </h3>
 
@@ -102,7 +102,7 @@ const TrustedPartners = () => {
               key={i}
               onClick={() => setCurrentIndex(i)}
               aria-label={`Go to slide ${i + 1}`}
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+              className={`w-2.5 h-2.5 rounded-md transition-all duration-300 ${
                 i === currentIndex ? "bg-orange-400 scale-110" : "bg-orange-200/60 hover:bg-orange-300"
               }`}
             />

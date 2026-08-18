@@ -1,80 +1,168 @@
 import { Link } from "@tanstack/react-router";
-import { MapPin, Mail, Phone, Facebook, Instagram, Linkedin } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-white border-t border-gray-100">
-      <div className="max-w-7xl mx-auto px-6 py-12 md:py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-10">
-        
-        {/* Column 1: Brand & Socials */}
-        <div className="flex flex-col">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="font-display text-2xl text-[#142346] font-bold tracking-tight">Wrap It</span>
+    <footer className="bg-navy text-white font-display overflow-hidden">
+
+      {/* LAYER 1: FINAL BRAND / CTA MOMENT */}
+      <div className="border-b border-white/10">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-16 lg:py-20 flex flex-col lg:flex-row lg:items-end justify-between gap-10 lg:gap-12">
+          <div className="flex flex-col">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-orange mb-6 flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-orange" />
+              The Next Step
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-[0.9] tracking-tighter uppercase text-white">
+              Ready To <br />
+              <span className="text-white/40">Transform</span> <br />
+              Your Space?
+            </h2>
           </div>
-          <p className="text-sm text-gray-500 leading-relaxed max-w-sm">
-            A premier vinyl wrapping and interior transformation studio based in Dubai. We turn everyday spaces into breathtaking experiences.
-          </p>
-          <div className="flex gap-3 mt-6">
-            <a href="#" className="w-10 h-10 rounded-full bg-[#142346] text-white flex items-center justify-center hover:bg-orange-500 transition-colors duration-300">
-              <Facebook className="w-4 h-4" />
-            </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-[#142346] text-white flex items-center justify-center hover:bg-orange-500 transition-colors duration-300">
-              <Instagram className="w-4 h-4" />
-            </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-[#142346] text-white flex items-center justify-center hover:bg-orange-500 transition-colors duration-300">
-              <Linkedin className="w-4 h-4" />
-            </a>
+          <div className="shrink-0">
+            <Link
+              to="/contact"
+              className="group relative inline-flex items-center justify-center gap-4 bg-white text-navy px-8 py-5 overflow-hidden transition-colors hover:bg-gray-100 mt-6 lg:mt-0"
+            >
+              <span className="text-base font-semibold uppercase tracking-widest relative z-10">
+                Start Your Project
+              </span>
+              <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-2 transition-transform" />
+              <div className="absolute inset-0 bg-orange translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+            </Link>
           </div>
         </div>
-
-        {/* Column 2: Sitemap */}
-        <div>
-          <h4 className="text-[#142346] font-bold text-xs uppercase tracking-[0.2em] mb-6">Sitemap</h4>
-          <ul className="space-y-3 text-sm text-gray-500 font-medium">
-            <li><Link to="/" className="hover:text-orange-500 transition-colors">Home</Link></li>
-            <li><Link to="/about" className="hover:text-orange-500 transition-colors">About Us</Link></li>
-            <li><Link to="/services" className="hover:text-orange-500 transition-colors">Services</Link></li>
-            <li><Link to="/gallery" className="hover:text-orange-500 transition-colors">Gallery</Link></li>
-            <li><Link to="/contact" className="hover:text-orange-500 transition-colors">Contact</Link></li>
-          </ul>
-        </div>
-
-        {/* Column 3: Services */}
-        <div>
-          <h4 className="text-[#142346] font-bold text-xs uppercase tracking-[0.2em] mb-6">Services</h4>
-          <ul className="space-y-3 text-sm text-gray-500 font-medium">
-            <li className="hover:text-[#142346] transition-colors cursor-default">Kitchen Wrapping</li>
-            <li className="hover:text-[#142346] transition-colors cursor-default">Door Wrapping</li>
-            <li className="hover:text-[#142346] transition-colors cursor-default">Bathroom Wrapping</li>
-            <li className="hover:text-[#142346] transition-colors cursor-default">Furniture Wrapping</li>
-            <li className="hover:text-[#142346] transition-colors cursor-default">Commercial Wrapping</li>
-          </ul>
-        </div>
-
-        {/* Column 4: Reach Us */}
-        <div>
-          <h4 className="text-[#142346] font-bold text-xs uppercase tracking-[0.2em] mb-6">Reach Us</h4>
-          <ul className="space-y-4 text-sm text-gray-500 font-medium">
-            <li className="flex items-start gap-3 group">
-              <MapPin className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" strokeWidth={1.5} /> 
-              <span className="group-hover:text-[#142346] transition-colors">Al Quoz, Dubai — UAE</span>
-            </li>
-            <li className="flex items-center gap-3 group">
-              <Mail className="w-5 h-5 text-orange-500 shrink-0" strokeWidth={1.5} /> 
-              <a href="mailto:hello@yallawrapit.ae" className="group-hover:text-[#142346] transition-colors">hello@yallawrapit.ae</a>
-            </li>
-            <li className="flex items-center gap-3 group">
-              <Phone className="w-5 h-5 text-orange-500 shrink-0" strokeWidth={1.5} /> 
-              <a href="tel:+971000000000" className="group-hover:text-[#142346] transition-colors font-bold">+971 00 000 0000</a>
-            </li>
-          </ul>
-        </div>
-        
       </div>
-      
-      <div className="border-t border-gray-100 py-6 px-6 text-center text-xs font-semibold text-gray-400 uppercase tracking-widest">
-        © {new Date().getFullYear()} Wrap It. All rights reserved. Designed with care.
+
+      {/* LAYER 2: NAVIGATION & INFORMATION */}
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-20 lg:py-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-16 xl:gap-8">
+
+          {/* Brand Anchor */}
+          <div className="xl:col-span-5 flex flex-col">
+            <div className="overflow-hidden mb-6 -ml-1">
+              <div
+                className="
+                  select-none
+                  whitespace-nowrap
+                  text-4xl md:text-5xl lg:text-[4rem]
+                  font-semibold
+                  uppercase
+                  leading-[0.75]
+                  tracking-[-0.06em]
+                   text-white/[0.055]
+                "
+              >
+                PrimeWrap
+              </div>
+            </div>
+            <p className="text-base md:text-lg font-light text-white/50 leading-relaxed max-w-sm">
+              PrimeWrap is Dubai's premium vinyl wrapping studio — transforming kitchens, doors, bathrooms, and furniture with fire-safe, luxury finishes.
+            </p>
+          </div>
+
+          {/* Explore */}
+          <div className="xl:col-span-2 flex flex-col">
+            <h4 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40 mb-8">
+              Explore
+            </h4>
+            <ul className="flex flex-col gap-3 text-xs font-semibold text-white uppercase tracking-widest">
+              {[
+                { label: "Home", to: "/" },
+                { label: "About Us", to: "/about" },
+                { label: "Services", to: "/services" },
+                { label: "Gallery", to: "/gallery" },
+                { label: "Contact", to: "/contact" },
+              ].map(({ label, to }) => (
+                <li key={to}>
+                  <Link to={to} className="hover:text-orange transition-colors relative group inline-block py-1">
+                    {label}
+                    <span className="absolute left-0 bottom-0 w-full h-[1px] bg-orange scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Services */}
+          <div className="xl:col-span-3 flex flex-col">
+            <h4 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40 mb-8">
+              Services
+            </h4>
+            <ul className="flex flex-col gap-3 text-xs font-semibold text-white uppercase tracking-widest">
+              {["Kitchen Wrapping", "Door Wrapping", "Bathroom Wrapping", "Furniture Wrapping", "Commercial Wrapping"].map(
+                (service) => (
+                  <li key={service} className="group cursor-default flex items-center gap-2">
+                    <span className="hover:text-orange transition-colors duration-300 relative inline-block py-1">
+                      {service}
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-orange opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
+                  </li>
+                ),
+              )}
+            </ul>
+          </div>
+
+          {/* Contact & Socials */}
+          <div className="xl:col-span-2 flex flex-col gap-16">
+            <div className="flex flex-col">
+              <h4 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40 mb-8">
+                Studio
+              </h4>
+              <div className="flex flex-col gap-4 text-base font-medium text-white tracking-wide">
+                <span className="text-white/50">Al Quoz, Dubai — UAE</span>
+                <a href="mailto:Rihan@primewrap.ae" className="hover:text-orange transition-colors relative inline-block w-fit">
+                  Rihan@primewrap.ae
+                  <span className="absolute left-0 bottom-0 w-full h-[1px] bg-orange scale-x-0 origin-left transition-transform duration-300 hover:scale-x-100" />
+                </a>
+                <a href="tel:+918971490262" className="hover:text-orange transition-colors relative inline-block w-fit">
+                  +91 897 149 0262
+                  <span className="absolute left-0 bottom-0 w-full h-[1px] bg-orange scale-x-0 origin-left transition-transform duration-300 hover:scale-x-100" />
+                </a>
+              </div>
+            </div>
+
+            <div className="flex flex-col">
+              <h4 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40 mb-6">
+                Socials
+              </h4>
+              <ul className="flex flex-col gap-3 text-xs font-semibold text-white uppercase tracking-widest">
+                {["Instagram", "Facebook", "LinkedIn"].map((social) => (
+                  <li key={social}>
+                    <a href="#" className="hover:text-orange transition-colors relative group inline-block">
+                      {social}
+                      <span className="absolute left-0 bottom-0 w-full h-[1px] bg-orange scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+        </div>
       </div>
+
+      {/* LAYER 3: LEGAL BOTTOM BAR */}
+      <div className="border-t border-white/10">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <span className="text-[10px] font-semibold text-white/40 uppercase tracking-[0.2em] text-center sm:text-left">
+            © {new Date().getFullYear()} PrimeWrap
+          </span>
+          <ul className="flex gap-6 text-[10px] font-semibold text-white/40 uppercase tracking-[0.2em]">
+            <li>
+              <Link to="/privacy-policy" className="hover:text-white transition-colors">
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link to="/terms-and-conditions" className="hover:text-white transition-colors">
+                Terms & Conditions
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+
     </footer>
   );
-}
+} 

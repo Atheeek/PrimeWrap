@@ -1,132 +1,144 @@
-import { useState, useEffect } from "react";
-import kitchen from "@/assets/Kitchen.jpeg";
-import doors from "@/assets/Doors2.jpeg";
-/* ---------------------------------------------------------
-   Data Structure
-   Each slide MUST have its own specific pins. 
-   Do not reuse coordinates across different images.
---------------------------------------------------------- */
-const slides = [
-  {
-    id: 1,
-    imgUrl: kitchen, // Replace with your actual kitchen image URL
-    alt: "Kitchen we can wrap",
-    pins: [
-      { label: "Cabinets", top: "35%", left: "25%" },
-      { label: "Countertops", top: "58%", left: "50%" },
-      { label: "Island", top: "75%", left: "75%" },
-    ],
-  },
-  {
-    id: 2,
-    imgUrl: doors,
-    alt: "Living space we can wrap",
-    pins: [
-      { label: "Wardrobe", top: "45%", left: "70%" },
-      { label: "Internal Doors", top: "50%", left: "25%" },
-    ],
-  },
-  {
-    id: 3,
-    imgUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1400&q=80",
-    alt: "Bathroom we can wrap",
-    pins: [
-      { label: "Vanity Unit", top: "60%", left: "45%" },
-      { label: "Wall Tiles", top: "30%", left: "70%" },
-    ],
-  },
-];
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 
-const raleway = { fontFamily: "'Raleway', sans-serif" };
+/* ---------------------------------------------------------
+   Data Structure (Source of Truth)
+--------------------------------------------------------- */
+const services = {
+  residential: [
+    { id: "r1", name: "Kitchen" },
+    { id: "r2", name: "Furniture" },
+    { id: "r3", name: "Bathrooms" },
+    { id: "r4", name: "Doors" },
+    { id: "r5", name: "Wall Panels" },
+    { id: "r6", name: "Window Frame" },
+    { id: "r7", name: "Appliances Wrap" },
+    { id: "r8", name: "Protection Film" },
+  ],
+  commercial: [
+    { id: "c1", name: "Offices" },
+    { id: "c2", name: "Showroom" },
+    { id: "c3", name: "Retail" },
+    { id: "c4", name: "Restaurants & Cafés" },
+    { id: "c5", name: "Hotels" },
+    { id: "c6", name: "Salons & Spas" },
+    { id: "c7", name: "Reception & Common Areas" },
+    { id: "c8", name: "Stair Wrap" },
+    { id: "c9", name: "Yacht Wrap" },
+  ],
+};
 
 const WhatWeWrap = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  // Auto-play slideshow logic (changes every 4 seconds)
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 4000);
-
-    return () => clearInterval(timer); // Cleanup prevents memory leaks
-  }, []);
+  const [activeCategory, setActiveCategory] = useState<"residential" | "commercial">("residential");
 
   return (
-    <section className="py-20 px-6 bg-white/40 ">
-      <div className="max-w-[1200px] mx-auto text-center">
+    <section 
+      className="py-20 md:py-32 bg-[#f8f7f5] relative overflow-hidden font-display"
+    >
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-16 lg:gap-32 relative">
         
-        {/* Heading */}
-        <div className="flex items-center justify-center gap-4 mb-14">
-          <span className="h-[2px] w-12 md:w-32 bg-orange-500" />
-          <h2 style={{ ...raleway, fontWeight: 700 }} className="text-3xl md:text-[42px] text-[#142346] whitespace-nowrap">
-            What Can We Wrap?
-          </h2>
-          <span className="h-[2px] w-12 md:w-32 bg-orange-500" />
+        {/* ======================= LEFT: EDITORIAL HEADER & SELECTOR ======================= */}
+        <div className="lg:w-[35%] lg:sticky lg:top-40 h-fit flex flex-col z-20">
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-orange mb-6 flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-orange" />
+              Capabilities
+            </div>
+            
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-[0.9] tracking-tighter uppercase text-navy mb-8">
+              One Surface. <br />
+              <span className="text-gray-400">Many</span> <br />
+              Possibilities.
+            </h2>
+            
+            <p className="text-sm md:text-base font-light text-gray-500 leading-relaxed max-w-sm">
+              From residential interiors to commercial spaces, PrimeWrap works across a wide range of surfaces and environments.
+            </p>
+          </motion.div>
         </div>
 
-        {/* Slideshow Container */}
-        <div className="relative border-[6px] md:border-[20px] border-white mx-auto max-w-[1000px] shadow-2xl rounded-sm aspect-[16/10] overflow-hidden bg-gray-200">
+        {/* ======================= RIGHT: INTERACTIVE SERVICE INDEX ======================= */}
+        <div className="lg:w-[65%] relative z-10 flex flex-col">
           
-          {slides.map((slide, index) => {
-            const isActive = index === currentSlide;
-
-            return (
-              <div
-                key={slide.id}
-                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                  isActive ? "opacity-100 z-10" : "opacity-0 z-0"
-                }`}
-              >
-                {/* Background Image */}
-                <img
-                  src={slide.imgUrl}
-                  alt={slide.alt}
-                  className="w-full h-full object-cover"
-                />
-
-                {/* Overlay to ensure pins remain readable */}
-                <div className="absolute inset-0 bg-black/10" />
-
-                {/* Pins */}
-                {slide.pins.map((pin, pinIdx) => (
-                  <div
-                    key={pinIdx}
-                    style={{ top: pin.top, left: pin.left }}
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-700 delay-300 ${
-                      isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          {/* Interactive Category Selector (Moved to Top Right) */}
+          <motion.div 
+            className="flex flex-row gap-8 md:gap-12 lg:gap-16 border-b border-navy/10 pb-6 mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {(["residential", "commercial"] as const).map((cat) => {
+              const isActive = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className="relative group text-left outline-none flex items-center"
+                >
+                  <span 
+                    className={`text-xs md:text-sm font-semibold uppercase tracking-[0.2em] transition-colors duration-500 ${
+                      isActive ? "text-navy" : "text-gray-400 group-hover:text-navy/60"
                     }`}
                   >
-                    <div className="flex flex-col items-center">
-                      <span 
-                        className="text-[#142346] text-sm md:text-base font-semibold bg-white px-4 py-1.5 rounded-full shadow-lg"
-                        style={raleway}
-                      >
-                        {pin.label}
-                      </span>
-                      <span className="w-px h-6 md:h-8 bg-[#142346]/80" />
-                      <span className="w-1 h-1 md:w-2 md:h-2 rounded-full bg-orange-500 ring-4 ring-orange-500/30 shadow-md" />
+                    {cat}
+                  </span>
+                  
+                  {/* Active Indicator Line */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeCategory"
+                      className="absolute -bottom-6 left-0 w-full h-[2px] bg-orange"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </motion.div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="flex flex-col"
+            >
+              {services[activeCategory].map((service, idx) => (
+                <div
+                  key={service.id}
+                  className="group relative border-b border-navy/10 py-3 md:py-4 lg:py-5 flex items-center justify-between overflow-hidden"
+                >
+                  {/* Subtle Background Hover Fill (Restored for Desktop) */}
+                  <div className="absolute inset-0 bg-white/50 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out z-0 hidden lg:block" />
+
+                  <div className="flex items-start gap-4 md:gap-6 lg:gap-8 w-full relative z-10">
+                    {/* Numbering */}
+                    <span className="text-[10px] md:text-xs font-semibold text-orange/60 tracking-widest mt-1.5 md:mt-2 shrink-0 w-6">
+                      {(idx + 1).toString().padStart(2, '0')}
+                    </span>
+                    
+                    {/* Service Name */}
+                    <div className="flex-1">
+                      <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold text-navy uppercase tracking-tighter leading-none">
+                        {service.name}
+                      </h3>
                     </div>
                   </div>
-                ))}
-              </div>
-            );
-          })}
+                </div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
-
-        {/* Manual Navigation Dots */}
-        <div className="flex items-center justify-center gap-3 mt-8">
-          {slides.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentSlide(idx)}
-              aria-label={`Go to image ${idx + 1}`}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
-                idx === currentSlide ? "w-8 bg-orange-500" : "w-2.5 bg-orange-500/30 hover:bg-orange-500/60"
-              }`}
-            />
-          ))}
-        </div>
-
       </div>
     </section>
   );

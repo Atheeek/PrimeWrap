@@ -1,41 +1,46 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Header } from "@/components/site/Header";
-import { Footer } from "@/components/site/Footer";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
-import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Play, ArrowRight } from "lucide-react";
 
 // ── Named shots ────────────────────────────────────────────────
 import bathroomImg from "@/assets/bathroom.jpeg";
 import doorsImg from "@/assets/Doors.jpeg";
 import doors2Img from "@/assets/Doors2.jpeg";
-import furnitureImg from "@/assets/furniture.jpeg";
 import kitchenImg from "@/assets/Kitchen.jpeg";
 import wardrobeImg from "@/assets/Wardrobe.jpeg";
+import furnitureImg from "@/assets/Wardrobe.jpeg";
 
 import gallery1 from "@/assets/gallery01.jpeg";
 import gallery2 from "@/assets/gallery02.jpeg";
 import gallery3 from "@/assets/gallery03.jpeg";
 import gallery4 from "@/assets/gallery04.jpeg";
 import gallery5 from "@/assets/gallery05.jpeg";
-import gallery6 from "@/assets/gallery06.jpeg";
 import gallery7 from "@/assets/gallery07.jpeg";
 import gallery8 from "@/assets/gallery08.jpeg";
 import gallery9 from "@/assets/gallery09.jpeg";
 import gallery10 from "@/assets/gallery10.jpeg";
-import gallery11 from "@/assets/gallery11.jpeg";
 import gallery12 from "@/assets/gallery12.jpeg";
 import gallery13 from "@/assets/gallery13.jpeg";
-import gallery14 from "@/assets/gallery14.jpeg";
 import gallery15 from "@/assets/gallery15.jpeg";
 import gallery16 from "@/assets/gallery16.jpeg";
-import gallery17 from "@/assets/gallery17.jpeg";
 import gallery18 from "@/assets/gallery18.jpeg";
-import gallery19 from "@/assets/gallery19.jpeg";
 import gallery20 from "@/assets/gallery20.jpeg";
-import gallery21 from "@/assets/gallery21.jpeg";
-import gallery22 from "@/assets/gallery22.jpeg";
+
+import bannerBathroom from "@/assets/banner-bathroom.jpeg";
+import bannerHall from "@/assets/banner-hall.jpeg";
+import bannerKitchen from "@/assets/banner-kitchen.jpeg";
+import newBath1 from "@/assets/gallery-bathroom-1.jpeg";
+import newKitchen1 from "@/assets/gallery-kitchen-1.jpeg";
+import newKitchen2 from "@/assets/gallery-kitchen-2.jpeg";
+import newKitchen3 from "@/assets/gallery-kitchen-3.jpeg";
+import newKitchen4 from "@/assets/gallery-kitchen-4.jpeg";
+import newKitchen5 from "@/assets/gallery-kitchen-5.jpeg";
+
+import wardrobeBeforeImg from "@/assets/wardrobe_before.jpeg";
+import wardrobeAfterImg from "@/assets/wardrobe_after.jpeg";
 
 import vid1 from "@/assets/video01.mp4";
 import vid2 from "@/assets/video02.mp4";
@@ -45,9 +50,9 @@ import vid4 from "@/assets/video04.mp4";
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "Gallery — Yalla Wrap It" },
+      { title: "Gallery — PrimeWrap" },
       { name: "description", content: "Recent vinyl wrapping projects across Dubai — kitchens, bathrooms, doors and more." },
-      { property: "og:title", content: "Gallery — Yalla Wrap It" },
+      { property: "og:title", content: "Gallery — PrimeWrap" },
       { property: "og:description", content: "See our recent transformations." },
     ],
   }),
@@ -57,67 +62,94 @@ export const Route = createFileRoute("/gallery")({
 // ─────────────────────────────────────────────────────────────
 // Data & Configuration
 // ─────────────────────────────────────────────────────────────
-const raleway = { fontFamily: "'Raleway', sans-serif" };
-
 type MediaItem = {
   id: string;
   type: "image" | "video";
   src: string;
-  category: "Kitchens" | "Bathrooms" | "Doors" | "Furniture" | "Wardrobes" | "Recent Work";
-  span: "sm" | "md" | "lg" | "tall" | "wide";
+  categories: ("Kitchens" | "Bathrooms" | "Doors" | "Furniture" | "Transformations")[];
+  span: "anchor" | "wide" | "portrait" | "square";
 };
 
-// Deterministic bento pattern
-const PATTERN: MediaItem["span"][] = ["lg", "sm", "md", "wide", "sm", "tall", "sm", "md"];
+// Editorial layout sequence
+const PATTERN: MediaItem["span"][] = [
+  "anchor",
+  "wide", "portrait",
+  "portrait", "wide",
+  "square", "square",
+  "portrait", "portrait", "portrait"
+];
 
 function sizeFor(i: number): MediaItem["span"] {
   return PATTERN[i % PATTERN.length];
 }
 
 const namedShots: Omit<MediaItem, "span" | "id">[] = [
-  { type: "image", src: kitchenImg, category: "Kitchens" },
-  { type: "image", src: bathroomImg, category: "Bathrooms" },
-  { type: "image", src: doorsImg, category: "Doors" },
-  { type: "image", src: doors2Img, category: "Doors" },
-  { type: "image", src: furnitureImg, category: "Furniture" },
-  { type: "image", src: wardrobeImg, category: "Wardrobes" },
+  { type: "image", src: doorsImg, categories: ["Furniture", "Doors"] },
+  { type: "image", src: doors2Img, categories: ["Furniture", "Doors"] },
+  { type: "image", src: kitchenImg, categories: ["Kitchens"] },
+  { type: "image", src: wardrobeImg, categories: ["Furniture"] },
+  { type: "image", src: bathroomImg, categories: ["Bathrooms"] },
+  { type: "image", src: furnitureImg, categories: ["Kitchens"] },
 ];
 
-const recentWork: string[] = [
-  gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7, gallery8, gallery9, gallery10, gallery11, gallery12, gallery13,
-  gallery14, gallery15, gallery16, gallery17, gallery18, gallery19, gallery20, gallery21, gallery22,
+const recentWork: Omit<MediaItem, "span" | "id">[] = [
+  { type: "image", src: gallery1, categories: ["Kitchens"] },
+  { type: "image", src: gallery2, categories: ["Kitchens"] },
+  { type: "image", src: gallery3, categories: ["Furniture"] },
+  { type: "image", src: gallery4, categories: ["Bathrooms"] },
+  { type: "image", src: gallery5, categories: ["Bathrooms"] },
+  { type: "image", src: gallery7, categories: ["Kitchens"] },
+  { type: "image", src: gallery8, categories: ["Kitchens"] },
+  { type: "image", src: gallery9, categories: ["Bathrooms"] },
+  { type: "image", src: gallery10, categories: ["Furniture"] },
+  { type: "image", src: gallery12, categories: ["Furniture"] },
+  { type: "image", src: gallery13, categories: ["Bathrooms"] },
+  { type: "image", src: gallery15, categories: ["Bathrooms"] },
+  { type: "image", src: gallery16, categories: ["Furniture"] },
+  { type: "image", src: gallery18, categories: ["Kitchens"] },
+  { type: "image", src: gallery20, categories: ["Kitchens"] },
+  { type: "image", src: bannerBathroom, categories: ["Bathrooms"] },
+  { type: "image", src: bannerHall, categories: ["Kitchens"] },
+  { type: "image", src: bannerKitchen, categories: ["Kitchens"] },
+  { type: "image", src: newBath1, categories: ["Bathrooms"] },
+  { type: "image", src: newKitchen1, categories: ["Kitchens"] },
+  { type: "image", src: newKitchen2, categories: ["Kitchens"] },
+  { type: "image", src: newKitchen3, categories: ["Kitchens"] },
+  { type: "image", src: newKitchen4, categories: ["Kitchens"] },
+  { type: "image", src: newKitchen5, categories: ["Kitchens"] },
+  { type: "image", src: wardrobeBeforeImg, categories: ["Furniture", "Transformations"] },
+  { type: "image", src: wardrobeAfterImg, categories: ["Furniture", "Transformations"] },
 ];
 
-const videos: string[] = [vid1, vid2, vid3, vid4];
+const videos: Omit<MediaItem, "span" | "id">[] = [
+  { type: "video", src: vid1, categories: ["Transformations"] },
+  { type: "video", src: vid2, categories: ["Transformations"] },
+  { type: "video", src: vid3, categories: ["Transformations"] },
+  { type: "video", src: vid4, categories: ["Transformations"] },
+];
 
 const ITEMS: MediaItem[] = [
   ...namedShots.map((s, i) => ({ ...s, id: `named-${i}`, span: sizeFor(i) })),
-  ...recentWork.map((src, i) => ({
+  ...recentWork.map((s, i) => ({
+    ...s,
     id: `wa-${i}`,
-    type: "image" as const,
-    src,
-    category: "Recent Work" as const,
     span: sizeFor(i + namedShots.length),
   })),
-  ...videos.map((src, i) => ({
+  ...videos.map((s, i) => ({
+    ...s,
     id: `vid-${i}`,
-    type: "video" as const,
-    src,
-    category: "Recent Work" as const,
     span: sizeFor(i + namedShots.length + recentWork.length),
   })),
 ];
 
-const FILTERS = ["All", "Kitchens", "Bathrooms", "Doors", "Furniture", "Wardrobes", "Videos"] as const;
+const FILTERS = ["All", "Kitchens", "Furniture", "Doors", "Bathrooms", "Transformations"] as const;
 type Filter = (typeof FILTERS)[number];
 
-// Refactored spans to support a dense 2-column layout on mobile
 const SPAN_CLASSES: Record<MediaItem["span"], string> = {
-  sm: "col-span-1 row-span-1",
-  md: "col-span-1 row-span-2",
-  lg: "col-span-2 row-span-2 md:col-span-2 md:row-span-2",
-  tall: "col-span-1 row-span-2 md:row-span-3",
-  wide: "col-span-2 row-span-1",
+  anchor: "col-span-12 md:col-span-10 md:col-start-2",
+  wide: "col-span-12 md:col-span-7",
+  portrait: "col-span-12 md:col-span-5",
+  square: "col-span-12 md:col-span-6",
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -129,8 +161,7 @@ function Gallery() {
 
   const filtered = useMemo(() => {
     if (filter === "All") return ITEMS;
-    if (filter === "Videos") return ITEMS.filter((i) => i.type === "video");
-    return ITEMS.filter((i) => i.category === filter && i.type !== "video");
+    return ITEMS.filter((i) => i.categories.includes(filter as any));
   }, [filter]);
 
   const openLightbox = (id: string) => {
@@ -163,76 +194,77 @@ function Gallery() {
   }, [lightboxIndex, filtered.length]);
 
   return (
-    <div className="min-h-screen bg-[#efeeea]">
+    <div className="min-h-screen bg-[#efeeea] font-display selection:bg-orange selection:text-white">
       <Header />
 
       {/* ===================== ARCHITECTURAL HERO ===================== */}
-      <section className="pt-32 md:pt-40 pb-12 px-4 md:px-8 lg:px-16 xl:px-24 border-b border-[#142346]/10">
-        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div>
-            <div className="flex items-center gap-4 mb-6">
-              <span className="h-[2px] w-10 bg-orange-500" />
-              <span className="text-xs tracking-[0.25em] uppercase text-orange-500 font-bold">
-                Portfolio
-              </span>
+      <section className="pt-32 md:pt-40 pb-12 px-6 md:px-12 border-b border-navy/10 relative">
+        <div className="max-w-[1600px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-orange mb-6 flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-orange" />
+              Our Work
             </div>
-            <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-bold text-[#142346] tracking-tight leading-[1.1] md:leading-[0.9]" style={raleway}>
-              The Gallery.
+            
+            <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] font-semibold text-navy tracking-tighter leading-[0.9] uppercase mb-8">
+              Surfaces, <br />
+              <span className="text-gray-400">Reimagined.</span>
             </h1>
-          </div>
-          <div className="max-w-xs pb-2">
-            <p className="text-gray-500 text-sm leading-relaxed">
-              An index of {ITEMS.length} recent architectural transformations across Dubai, strictly categorized.
+
+            <p className="text-base md:text-lg font-light text-gray-500 max-w-lg leading-relaxed">
+              An index of recent architectural transformations across Dubai. Select a category below to explore the possibilities.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ===================== MAGNETIC FILTERS (Non-Sticky) ===================== */}
-      <div className="relative z-20 bg-[#efeeea] border-b border-[#142346]/10">
-        <div className="max-w-[1400px] mx-auto px-4 md:px-8 lg:px-16 xl:px-24 py-4 overflow-x-auto no-scrollbar flex items-center gap-2">
-          {FILTERS.map((f) => {
-            const isActive = filter === f;
-            return (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={`relative shrink-0 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-colors duration-300 z-10 ${
-                  isActive ? "text-white" : "text-[#142346] hover:text-orange-500"
-                }`}
-                style={raleway}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="filter-pill"
-                    className="absolute inset-0 bg-[#142346] rounded-full -z-10 shadow-md"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-                {f}
-              </button>
-            );
-          })}
+      {/* ===================== EDITORIAL FILTERS ===================== */}
+      <div className="sticky top-0 z-30 bg-[#efeeea]/90 backdrop-blur-md border-b border-navy/10">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-6 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-8 md:gap-12 min-w-max">
+            {FILTERS.map((f) => {
+              const isActive = filter === f;
+              return (
+                <button
+                  key={f}
+                  onClick={() => setFilter(f)}
+                  className="group relative flex flex-col items-start gap-2"
+                >
+                  <span className={`text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors duration-300 ${
+                    isActive ? "text-navy" : "text-gray-400 hover:text-navy"
+                  }`}>
+                    {f}
+                  </span>
+                  <div className={`h-[1px] bg-navy transition-all duration-300 ease-out ${
+                    isActive ? "w-full" : "w-0 group-hover:w-full"
+                  }`} />
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {/* ===================== COLLAGE / BENTO GRID ===================== */}
-      <section className="py-12 px-4 md:px-8 lg:px-16 xl:px-24 max-w-[1400px] mx-auto">
+      {/* ===================== MASONRY GRID ===================== */}
+      <section className="py-12 md:py-24 px-6 md:px-12 max-w-[1600px] mx-auto">
         <motion.div 
           layout
-          // Changed to grid-cols-2 on mobile for collage effect, reduced auto-row height
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[120px] md:auto-rows-[160px] gap-3 md:gap-4"
+          className="columns-1 md:columns-2 lg:columns-3 gap-6 md:gap-12 space-y-6 md:space-y-12"
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((item) => (
               <motion.div
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4 }}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 key={item.id}
-                className={SPAN_CLASSES[item.span]}
+                className="break-inside-avoid"
               >
                 <GalleryTile item={item} onOpen={() => openLightbox(item.id)} />
               </motion.div>
@@ -241,14 +273,31 @@ function Gallery() {
         </motion.div>
 
         {filtered.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-32 text-center">
-            <span className="text-[#142346]/20 font-bold text-4xl mb-4" style={raleway}>∅</span>
-            <p className="text-[#142346]/50 text-sm font-bold uppercase tracking-widest">No records found</p>
+          <div className="flex flex-col items-center justify-center py-40 text-center">
+            <span className="text-gray-300 font-light text-6xl mb-6">∅</span>
+            <p className="text-gray-400 text-xs font-semibold uppercase tracking-[0.2em]">No records found</p>
           </div>
         )}
       </section>
 
-      <Footer />
+      {/* ===================== FINAL CTA ===================== */}
+      <section className="py-24 md:py-32 px-6 md:px-12 border-t border-navy/10 bg-white flex flex-col items-center text-center">
+        <h2 className="text-4xl md:text-6xl font-semibold uppercase tracking-tighter text-navy leading-[0.95] mb-12">
+          Your Space <br />
+          Could Be Next.
+        </h2>
+        <Link 
+          to="/contact" 
+          className="group relative inline-flex items-center justify-center gap-4 bg-navy text-white px-10 py-6 overflow-hidden transition-colors hover:bg-navy/90"
+        >
+          <span className="text-base font-semibold uppercase tracking-widest relative z-10">
+            Start Your Project
+          </span>
+          <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-2 transition-transform" />
+          <div className="absolute inset-0 bg-orange translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+        </Link>
+      </section>
+
       <FloatingWhatsApp />
 
       {/* ===================== CINEMATIC LIGHTBOX ===================== */}
@@ -274,12 +323,12 @@ function GalleryTile({ item, onOpen }: { item: MediaItem; onOpen: () => void }) 
   return (
     <button
       onClick={onOpen}
-      className="group relative w-full h-full overflow-hidden bg-gray-200 border border-black/5 focus:outline-none"
+      className="group relative w-full overflow-hidden bg-gray-100 focus:outline-none flex"
     >
       {item.type === "video" ? (
         <video
           src={item.src}
-          className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105 filter group-hover:brightness-75"
+          className="w-full h-auto block transition-transform duration-1000 group-hover:scale-105 filter group-hover:contrast-110"
           muted
           loop
           playsInline
@@ -289,26 +338,28 @@ function GalleryTile({ item, onOpen }: { item: MediaItem; onOpen: () => void }) 
       ) : (
         <img
           src={item.src}
-          alt={item.category}
+          alt={item.categories.join(", ")}
           loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105 filter group-hover:brightness-75"
+          className="w-full h-auto block transition-transform duration-1000 group-hover:scale-105 filter group-hover:contrast-110"
         />
       )}
 
-      {/* Structural Inner Border overlay */}
-      <div className="absolute inset-2 md:inset-4 border border-white/0 group-hover:border-white/20 transition-colors duration-500 z-10 pointer-events-none" />
+      {/* Hover Overlay */}
+      <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/20 transition-colors duration-500 z-10 pointer-events-none" />
 
-      {/* Center Action Icon */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 z-20">
-        <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white transform scale-50 group-hover:scale-100 transition-transform duration-500">
-          {item.type === "video" ? <Play className="w-4 h-4 md:w-5 md:h-5 ml-0.5" fill="currentColor" /> : <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white" />}
+      {/* Play Icon for Videos */}
+      {item.type === "video" && (
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 z-20">
+          <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white transform scale-50 group-hover:scale-100 transition-transform duration-500">
+            <Play className="w-6 h-6 ml-1" fill="currentColor" />
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Bottom Category Tag */}
-      <div className="absolute bottom-3 left-3 md:bottom-6 md:left-6 opacity-0 group-hover:opacity-100 transition-all duration-500 z-20 translate-y-4 group-hover:translate-y-0">
-        <span className="px-2 py-1 md:px-3 md:py-1.5 bg-[#142346] text-white text-[8px] md:text-[10px] font-bold uppercase tracking-widest shadow-lg" style={raleway}>
-          {item.category}
+      {/* Typographic Metadata Reveal */}
+      <div className="absolute top-6 left-6 opacity-0 group-hover:opacity-100 transition-all duration-500 z-20 -translate-y-4 group-hover:translate-y-0">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white mix-blend-difference drop-shadow-md">
+          {item.categories[0]}
         </span>
       </div>
     </button>
@@ -316,7 +367,7 @@ function GalleryTile({ item, onOpen }: { item: MediaItem; onOpen: () => void }) 
 }
 
 // ─────────────────────────────────────────────────────────────
-// Cinematic Lightbox (Framer Motion)
+// Cinematic Lightbox
 // ─────────────────────────────────────────────────────────────
 function Lightbox({
   items,
@@ -338,64 +389,67 @@ function Lightbox({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
-      className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#142346]/95 backdrop-blur-2xl"
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#0a1122]/95 backdrop-blur-2xl"
       onClick={onClose}
     >
       {/* Top Bar */}
-      <div className="absolute top-0 left-0 w-full p-4 md:p-8 flex items-center justify-between z-50">
-        <span className="text-white/60 text-[10px] md:text-xs font-bold uppercase tracking-widest" style={raleway}>
-          {index + 1} / {items.length} <span className="mx-2 md:mx-4 h-px w-4 md:w-8 bg-white/20 inline-block align-middle" /> {active.category}
+      <div className="absolute top-0 left-0 w-full p-6 md:p-8 flex items-center justify-between z-50">
+        <span className="text-white/40 text-[10px] font-semibold uppercase tracking-[0.2em]">
+          {index + 1} / {items.length} <span className="mx-4 h-[1px] w-8 bg-white/20 inline-block align-middle" /> {active.categories.join(", ")}
         </span>
         <button
           onClick={onClose}
-          className="h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/5 hover:bg-orange-500 text-white flex items-center justify-center transition-colors group"
+          className="group flex items-center gap-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors"
           aria-label="Close"
         >
-          <X className="w-4 h-4 md:w-5 md:h-5 group-hover:rotate-90 transition-transform duration-300" />
+          Close
+          <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-500" />
         </button>
       </div>
 
-      {/* Navigation Arrows */}
-      <button
+      {/* Navigation Areas */}
+      <div 
+        className="absolute left-0 top-0 bottom-0 w-1/4 cursor-w-resize z-40 group flex flex-col justify-center"
         onClick={(e) => { e.stopPropagation(); onPrev(); }}
-        className="absolute left-2 md:left-12 h-10 w-10 md:h-14 md:w-14 rounded-full bg-white/5 border border-white/10 hover:bg-white hover:text-[#142346] text-white flex items-center justify-center transition-colors z-50"
-        aria-label="Previous"
       >
-        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 ml-[-2px]" />
-      </button>
+        <div className="ml-8 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <ChevronLeft className="w-5 h-5 -ml-0.5" />
+        </div>
+      </div>
 
-      <button
+      <div 
+        className="absolute right-0 top-0 bottom-0 w-1/4 cursor-e-resize z-40 group flex flex-col justify-center items-end"
         onClick={(e) => { e.stopPropagation(); onNext(); }}
-        className="absolute right-2 md:right-12 h-10 w-10 md:h-14 md:w-14 rounded-full bg-white/5 border border-white/10 hover:bg-white hover:text-[#142346] text-white flex items-center justify-center transition-colors z-50"
-        aria-label="Next"
       >
-        <ChevronRight className="w-5 h-5 md:w-6 md:h-6 mr-[-2px]" />
-      </button>
+        <div className="mr-8 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <ChevronRight className="w-5 h-5 -mr-0.5" />
+        </div>
+      </div>
 
       {/* Media Container */}
-      <div className="w-full h-full max-w-6xl max-h-[85vh] px-14 md:px-20 flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full h-full max-w-[90vw] max-h-[85vh] flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
         <AnimatePresence mode="wait">
           <motion.div
             key={active.id}
-            initial={{ opacity: 0, scale: 0.98, filter: "blur(4px)" }}
+            initial={{ opacity: 0, scale: 0.98, filter: "blur(8px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, scale: 1.02, filter: "blur(4px)" }}
-            transition={{ duration: 0.4 }}
+            exit={{ opacity: 0, scale: 1.02, filter: "blur(8px)" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="w-full h-full flex items-center justify-center"
           >
             {active.type === "video" ? (
               <video 
                 src={active.src} 
-                className="max-h-full max-w-full rounded-sm shadow-2xl" 
+                className="max-h-full max-w-full object-contain shadow-2xl" 
                 controls 
                 autoPlay 
               />
             ) : (
               <img 
                 src={active.src} 
-                alt={active.category} 
-                className="max-h-full max-w-full object-contain rounded-sm shadow-2xl" 
+                alt={active.categories.join(", ")} 
+                className="max-h-full max-w-full object-contain shadow-2xl" 
               />
             )}
           </motion.div>

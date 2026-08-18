@@ -1,27 +1,22 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 
 interface ScrollExpandMediaProps {
-  mediaType?: "video" | "image";
   mediaSrc: string;
-  posterSrc?: string;
   bgImageSrc: string;
-  title?: string;
-  date?: string;
+  initialTitle?: string;
+  finalTitle?: string;
   scrollToExpand?: string;
-  textBlend?: boolean;
   children?: ReactNode;
 }
 
 export default function ScrollExpandMedia({
-  mediaType = "video",
   mediaSrc,
-  posterSrc,
   bgImageSrc,
-  title,
-  date,
-  scrollToExpand,
-  textBlend = false,
+  initialTitle = "WE DON'T REPLACE THE SPACE.",
+  finalTitle = "WE TRANSFORM IT.",
+  scrollToExpand = "Scroll to explore",
   children,
 }: ScrollExpandMediaProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -32,8 +27,9 @@ export default function ScrollExpandMedia({
     const computeProgress = () => {
       const section = sectionRef.current;
       if (!section) return;
-      const scrollableDistance = section.offsetHeight - window.innerHeight;
       const scrolled = -section.getBoundingClientRect().top;
+      // Hardcode the animation to complete over 200vh of scrolling
+      const scrollableDistance = window.innerHeight * 2;
       const raw = scrollableDistance > 0 ? scrolled / scrollableDistance : 0;
       setProgress(Math.min(Math.max(raw, 0), 1));
     };
@@ -56,53 +52,68 @@ export default function ScrollExpandMedia({
     };
   }, []);
 
-  useEffect(() => {
-    const reset = () => setProgress(0);
-    window.addEventListener("resetSection", reset);
-    return () => window.removeEventListener("resetSection", reset);
-  }, []);
-
   const expandRaw = Math.min(progress / 0.65, 1);
   const eased = 1 - Math.pow(1 - expandRaw, 2); 
 
-  const mediaSize = 42 + eased * 58; 
-  const radius = 32 - eased * 32; 
-  const overlayOpacity = 0.72 - eased * 0.72;
+  // Image size & styling
+  const mediaSize = 35 + eased * 65; 
+  const radius = 16 - eased * 16; 
+  const overlayOpacity = 0.85 - eased * 0.7;
 
-  // Title splits inwards and stays visible over the media
-  const textProgress = Math.min(progress / 0.4, 1);
-  const textOffset = (1 - textProgress) * 30; // Starts 30vw apart, slides inward to 0
+  const clamp = (val: number, min: number, max: number) => Math.min(Math.max(val, min), max);
 
-  const hintOpacity = Math.max(1 - progress / 0.12, 0);
+  // Text transition logic
+  // 0-20% scroll: initialTitle fully visible
+  // 20-45% scroll: initialTitle fades/moves out, finalTitle fades/moves in
+  // >45% scroll: finalTitle fully visible (image continues expanding until 65%)
 
-  const titleWords = (title ?? "").split(" ");
-  const titleFirst = titleWords[0] ?? "";
-  const titleRest = titleWords.slice(1).join(" ");
+  // Initial text fades out and moves up between 20% and 45% progress
+  const initialOpacity = 1 - clamp((progress - 0.2) / 0.25, 0, 1);
+  const initialY = -clamp((progress - 0.2) / 0.25, 0, 1) * 30; // Move up 30px
+  const initialScale = 1 + clamp((progress - 0.2) / 0.25, 0, 1) * 0.05;
+
+  // Final text fades in, scales up, and moves up between 20% and 45% progress
+  const finalOpacity = clamp((progress - 0.2) / 0.25, 0, 1);
+  const finalY = 30 - clamp((progress - 0.2) / 0.25, 0, 1) * 30; // Move from 30px down to 0
+  const finalScale = 0.9 + clamp((progress - 0.2) / 0.25, 0, 1) * 0.1;
+
+  const hintOpacity = Math.max(1 - progress / 0.15, 0);
+
+  // We only want the metadata to fade out at the very beginning (0-15%)
+  const metaOpacity = 1 - clamp(progress / 0.15, 0, 1);
 
   return (
+    <>
     <section ref={sectionRef} className="relative" style={{ height: "300vh" }}>
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-navy">
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center bg-[#1a1a1a]">
         
-        {/* Background */}
+        {/* Blurred Background */}
         <div
           className="absolute inset-0 bg-cover bg-center scale-110"
-          style={{ backgroundImage: `url(${bgImageSrc})`, filter: "blur(10px)" }}
+          style={{ backgroundImage: `url(${bgImageSrc})`, filter: "blur(20px) grayscale(50%)" }}
         />
-        <div className="absolute inset-0 bg-navy" style={{ opacity: overlayOpacity }} />
+        <div className="absolute inset-0 bg-[#0a0a0a]" style={{ opacity: overlayOpacity }} />
 
-        {/* Date label */}
-        {date && (
-          <div
-            className="absolute top-8 left-6 md:left-10 z-10 text-white/70 text-xs md:text-sm tracking-[0.25em] uppercase"
-            style={{ opacity: hintOpacity }}
-          >
-            {date}
-          </div>
-        )}
+        {/* Editorial Metadata (Fades out quickly) */}
+        <div 
+          className="absolute top-10 left-6 md:left-12 z-30 text-white/50 text-[10px] md:text-xs font-semibold tracking-[0.3em] uppercase flex flex-col gap-1 pointer-events-none"
+          style={{ opacity: metaOpacity }}
+        >
+          <span>PrimeWrap</span>
+          <span>Interior Surface Transformation</span>
+          <span>UAE</span>
+        </div>
+        
+        <div 
+          className="absolute top-10 right-6 md:right-12 z-30 text-white/50 text-[10px] md:text-xs font-semibold tracking-[0.3em] uppercase flex flex-col gap-1 pointer-events-none text-right"
+          style={{ opacity: metaOpacity }}
+        >
+          <span>SURFACE / 01</span>
+        </div>
 
-        {/* Media (z-20) */}
+        {/* Media Container */}
         <div
-          className="relative z-20 overflow-hidden shadow-2xl"
+          className="relative z-20 overflow-hidden shadow-2xl transition-all duration-75"
           style={{
             width: `${mediaSize}vw`,
             height: `${mediaSize}vh`,
@@ -111,63 +122,61 @@ export default function ScrollExpandMedia({
             borderRadius: `${radius}px`,
           }}
         >
-          {mediaType === "video" ? (
-            <video
-              src={mediaSrc}
-              poster={posterSrc}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <img src={mediaSrc} alt={title ?? ""} className="w-full h-full object-cover" />
-          )}
+          <img src={mediaSrc} alt="Surface Detail" className="w-full h-full object-cover" />
+          
+          {/* Very subtle grain over the image */}
+          <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none" 
+               style={{ backgroundImage: 'url("https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png")' }} />
         </div>
 
-        {/* Split, blended title (z-30 ensures it is in FRONT of media) */}
-        {title && (
-          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-0 md:gap-2 px-6 pointer-events-none">
-            <h2
-              className="font-display font-bold uppercase text-white text-[15vw] md:text-[8vw] leading-none"
-              style={{
-                transform: `translateX(-${textOffset}vw)`, // Slides in from the left
-                mixBlendMode: textBlend ? "difference" : "normal",
-              }}
-            >
-              {titleFirst}
-            </h2>
-            {titleRest && (
-              <h2
-                className="font-display font-bold uppercase text-white text-[15vw] md:text-[8vw] leading-none"
-                style={{
-                  transform: `translateX(${textOffset}vw)`, // Slides in from the right
-                  mixBlendMode: textBlend ? "difference" : "normal",
-                }}
-              >
-                {titleRest}
-              </h2>
-            )}
-          </div>
-        )}
+        {/* Dynamic Typography Overlay */}
+        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center px-6 pointer-events-none">
+          {/* Initial Title */}
+          <h2
+            className="absolute font-display font-extrabold uppercase text-white text-[6vw] md:text-[3.5vw] leading-tight text-center max-w-4xl tracking-tight"
+            style={{ 
+              opacity: initialOpacity, 
+              transform: `translateY(${initialY}px) scale(${initialScale})`,
+              textShadow: "0 4px 20px rgba(0,0,0,0.5)",
+              willChange: "opacity, transform"
+            }}
+          >
+            {initialTitle}
+          </h2>
 
-        {/* Scroll hint */}
+          {/* Final Title */}
+          <h2
+            className="absolute font-display font-extrabold uppercase text-white text-[12vw] md:text-[8vw] leading-none text-center tracking-tighter"
+            style={{ 
+              opacity: finalOpacity, 
+              transform: `translateY(${finalY}px) scale(${finalScale})`,
+              textShadow: "0 10px 40px rgba(0,0,0,0.3)",
+              willChange: "opacity, transform"
+            }}
+          >
+            {finalTitle}
+          </h2>
+        </div>
+
+        {/* Scroll Hint */}
         {scrollToExpand && (
           <div
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/70"
+            className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 text-white/50"
             style={{ opacity: hintOpacity }}
           >
-            <span className="text-[11px] uppercase tracking-[0.3em]">{scrollToExpand}</span>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.4em]">{scrollToExpand}</span>
             <ChevronDown className="w-4 h-4 animate-bounce" />
           </div>
         )}
       </div>
-
-      {/* Content revealed once the media finishes expanding */}
-      {children && (
-        <div className="relative z-40 bg-[#efeeea]">{children}</div>
-      )}
     </section>
+
+    {/* Revealed Content */}
+    {children && (
+      <div className="relative z-40 bg-[#f4f3f0] -mt-[100vh] shadow-[0_-20px_50px_rgba(0,0,0,0.3)]">
+        {children}
+      </div>
+    )}
+    </>
   );
 }
