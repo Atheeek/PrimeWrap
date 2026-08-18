@@ -182,7 +182,7 @@ export function Header() {
                     <span className={`h-[1.5px] bg-current transition-all duration-300 ${desktopMenuOpen ? "w-full absolute top-1/2 -translate-y-1/2 rotate-45" : "w-full"}`} />
                     <span className={`h-[1.5px] bg-current transition-all duration-300 ${desktopMenuOpen ? "w-full absolute top-1/2 -translate-y-1/2 -rotate-45" : "w-2/3 group-hover:w-full"}`} />
                   </span>
-                  <span className={`text-[11px] font-bold uppercase tracking-[0.25em] text-navy`}>
+                  <span className={`text-xs xl:text-[13px] font-bold uppercase tracking-[0.2em] text-navy`}>
                     {desktopMenuOpen ? "Close" : "Menu"}
                   </span>
                 </button>
@@ -202,7 +202,7 @@ export function Header() {
             <div className="flex items-center justify-end gap-8 xl:gap-10 z-[110] flex-1 min-w-0">
               <Link
                 to="/gallery"
-                className="relative text-[11px] font-bold uppercase tracking-[0.25em] text-navy group overflow-hidden pb-1"
+                className="relative text-xs xl:text-[13px] font-bold uppercase tracking-[0.2em] text-navy group overflow-hidden pb-1"
               >
                 <span className="relative z-10 group-hover:text-orange transition-colors duration-300">Gallery</span>
                 <span className="absolute bottom-0 left-0 w-full h-[1px] bg-orange -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-300 ease-out" />
@@ -210,7 +210,7 @@ export function Header() {
 
               <Link
                 to="/contact"
-                className="group relative inline-flex items-center justify-center gap-3 bg-navy text-white px-7 py-3.5 overflow-hidden text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-300"
+                className="group relative inline-flex items-center justify-center gap-3 bg-navy text-white px-7 py-3.5 overflow-hidden text-[11px] xl:text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300"
               >
                 <span className="absolute inset-0 w-full h-full bg-[#C19A5B] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
                 <span className="relative z-10 flex items-center gap-3">
@@ -284,8 +284,8 @@ export function Header() {
                 transition={{ delay: 0.4 }}
                 className="absolute bottom-0 left-0 w-full p-8 border-t border-navy/10 flex justify-between items-center bg-[#f8f7f5]"
               >
-                <a href="tel:+918971490262" className="text-xs font-semibold uppercase tracking-widest text-navy">
-                  Call Us
+                <a href="tel:+971501234567" className="text-xs font-semibold uppercase tracking-widest text-navy">
+                  +971 50 123 4567
                 </a>
                 <Link 
                   to="/contact" 
@@ -343,8 +343,8 @@ export function Header() {
                   <a href="mailto:info@primewrap.ae" className="hover:text-orange transition-colors flex items-center gap-3">
                     <ArrowRight className="w-4 h-4 text-orange" /> info@primewrap.ae
                   </a>
-                  <a href="tel:+918971490262" className="hover:text-orange transition-colors flex items-center gap-3">
-                    <ArrowRight className="w-4 h-4 text-orange" /> +91 897 149 0262
+                  <a href="tel:+971501234567" className="hover:text-orange transition-colors flex items-center gap-3">
+                    <span className="text-sm font-semibold tracking-wider">+971 50 123 4567</span>
                   </a>
                 </div>
 

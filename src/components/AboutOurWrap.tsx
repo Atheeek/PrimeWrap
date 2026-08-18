@@ -106,8 +106,8 @@ const FeatureCard = ({ feature, index }: { feature: typeof wrapFeatures[0], inde
 );
 
 const MobileFeatureCard = ({ feature, index }: { feature: typeof wrapFeatures[0], index: number }) => (
-  <div className="bg-white border border-navy/10 rounded-lg p-6 flex flex-col gap-4 shadow-[0_4px_20px_rgba(20,35,70,0.05)] transition-colors active:border-orange/30">
-    <div className="flex items-center justify-between">
+  <div className="bg-white border border-navy/10 rounded-lg p-6 flex flex-col gap-4 shadow-[0_4px_20px_rgba(20,35,70,0.05)] transition-colors active:border-orange/30 h-[220px]">
+    <div className="flex items-center justify-between shrink-0">
       <div className="w-12 h-12 text-navy">
         <feature.icon />
       </div>
@@ -115,9 +115,9 @@ const MobileFeatureCard = ({ feature, index }: { feature: typeof wrapFeatures[0]
         0{index + 1}
       </span>
     </div>
-    <div>
+    <div className="flex-1 overflow-hidden">
       <h3 className="text-lg font-bold text-navy mb-2 font-display">{feature.title}</h3>
-      <p className="text-sm font-light text-gray-500 leading-relaxed">{feature.desc}</p>
+      <p className="text-sm font-light text-gray-500 leading-relaxed line-clamp-4">{feature.desc}</p>
     </div>
   </div>
 );
@@ -141,7 +141,7 @@ export default function AboutOurWrap() {
   return (
     <section className="py-24 md:py-40 px-6 max-w-7xl mx-auto">
       <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-        
+
         {/* Editorial Header (Left Column) */}
         <div className="lg:col-span-5 flex flex-col lg:sticky lg:top-32">
           <Reveal>
@@ -152,7 +152,7 @@ export default function AboutOurWrap() {
               A smarter way to transform.
             </h2>
           </Reveal>
-          
+
           <Reveal delay={0.1} className="mt-8">
             <p className="text-navy/60 text-base md:text-lg font-light leading-relaxed max-w-sm">
               Our architectural films provide a sophisticated, durable finish that elevates any surface. We combine aesthetic precision with long-lasting performance, so you never have to compromise.
@@ -162,7 +162,7 @@ export default function AboutOurWrap() {
 
         {/* Features List (Right Column) */}
         <div className="lg:col-span-7 flex flex-col mt-8 lg:mt-0">
-          
+
           {/* Desktop View (Editorial List) */}
           <div className="hidden md:flex flex-col">
             <div className="border-t border-navy/10" />
@@ -190,31 +190,31 @@ export default function AboutOurWrap() {
                 );
               })}
             </div>
-            
+
             {/* Mobile Controls */}
             <div className="flex items-center justify-between mt-8 px-2">
               <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-navy/30">
                 {String(page + 1).padStart(2, '0')} / {String(totalPages).padStart(2, '0')}
               </span>
               <div className="flex gap-2">
-                <button 
+                <button
                   onClick={goPrev}
                   className="w-10 h-10 rounded-full border border-navy/10 flex items-center justify-center text-navy hover:bg-[#efeeea] transition-colors"
                 >
-                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
                 </button>
-                <button 
+                <button
                   onClick={goNext}
                   className="w-10 h-10 rounded-full border border-navy/10 flex items-center justify-center text-navy hover:bg-[#efeeea] transition-colors"
                 >
-                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
                 </button>
               </div>
             </div>
           </div>
 
         </div>
-        
+
       </div>
     </section>
   );

@@ -115,8 +115,8 @@ export function Footer() {
                   Rihan@primewrap.ae
                   <span className="absolute left-0 bottom-0 w-full h-[1px] bg-orange scale-x-0 origin-left transition-transform duration-300 hover:scale-x-100" />
                 </a>
-                <a href="tel:+918971490262" className="hover:text-orange transition-colors relative inline-block w-fit">
-                  +91 897 149 0262
+                <a href="tel:+971501234567" className="hover:text-orange transition-colors relative inline-block w-fit">
+                  +971 50 123 4567
                   <span className="absolute left-0 bottom-0 w-full h-[1px] bg-orange scale-x-0 origin-left transition-transform duration-300 hover:scale-x-100" />
                 </a>
               </div>

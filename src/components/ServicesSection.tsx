@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import bathroom from "@/assets/bathroom.jpeg";
+import bathroom from "@/assets/banner-bathroom.jpeg";
 import door from "@/assets/Doors2.jpeg";
-import kitchen from "@/assets/Kitchen.jpeg";
-import furniture from "@/assets/furniture.jpeg";
+import kitchen from "@/assets/banner-kitchen.jpeg";
+import furniture from "@/assets/gallery-kitchen-1.jpeg";
 import { Link } from "@tanstack/react-router"; // Ensure Link is imported from TanStack Router
 
 /* ---------------------------------------------------------
@@ -53,7 +53,7 @@ const services: Service[] = [
     category: "Asset Renewal",
     desc: "Add sophistication and extreme durability to corporate desks and home cabinetry.",
     href: "/services",
-    image: "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=1200&q=80",
+    image: furniture,
   },
   {
     id: "05",

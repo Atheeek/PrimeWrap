@@ -1,8 +1,10 @@
 import bathroom from "@/assets/banner-bathroom.jpeg";
-import doors from "@/assets/banner-hall.jpeg";
+import doors from "@/assets/gallery10.jpeg";
 import kitchen from "@/assets/banner-kitchen.jpeg";
 import wardrobe from "@/assets/Wardrobe.jpeg";
-import furniture from "@/assets/Wardrobe.jpeg";
+import furniture from "@/assets/gallery-kitchen-2.jpeg";
+import appliances from "@/assets/appliances-wrap.jpg";
+import windowframes from "@/assets/gallery-bathroom-1.jpeg";
 
 export type ServiceContent = {
   slug: string;
@@ -85,7 +87,7 @@ export const services: ServiceContent[] = [
     eyebrow: "Architectural focus",
     summary: "Transform feature walls and interior panels with premium textured films.",
     description: "Instead of traditional paint or wallpaper, our architectural films provide a highly durable, textured, or smooth finish for your interior walls and paneling, immediately elevating the aesthetic of any room.",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200",
+    image: windowframes,
     benefits: [
       "Instantly adds depth and texture",
       "Durable and easy to maintain",
@@ -115,28 +117,13 @@ export const services: ServiceContent[] = [
     eyebrow: "Kitchen integration",
     summary: "Seamlessly integrate your white goods into your kitchen's design palette.",
     description: "Instead of hiding your appliances or buying new ones to match a remodel, wrapping them allows for perfect color coordination with your cabinetry and worktops, ensuring a unified kitchen design.",
-    image: "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&q=80&w=1200",
+    image: appliances,
     benefits: [
       "Cost-effective alternative to buying new",
       "Creates a built-in, cohesive look",
       "Protects original appliance surfaces",
     ],
     idealFor: ["Fridges & Freezers", "Dishwashers", "Washing machines"],
-  },
-  {
-    slug: "protection-film",
-    type: "residential",
-    title: "Protection Film",
-    eyebrow: "Surface longevity",
-    summary: "Preserve the beauty of your surfaces with virtually invisible, high-durability protection films.",
-    description: "Our protective films safeguard your most heavily used surfaces from scratches, stains, and daily wear without altering their appearance. Ideal for natural stone, wood, and high-gloss finishes.",
-    image: "https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&q=80&w=1200",
-    benefits: [
-      "Maintains original surface appearance",
-      "Highly resistant to scratches and stains",
-      "Easy to clean and maintain",
-    ],
-    idealFor: ["Kitchen countertops", "Dining tables", "High-traffic touchpoints"],
   },
 
   // --- COMMERCIAL ---
