@@ -160,7 +160,7 @@ export function LeadForm({ source, compact = false }: LeadFormProps) {
               required
               type="tel"
               autoComplete="tel"
-              placeholder="+971 50 000 0000"
+              placeholder="+971 521263146"
             />
           </label>
           <label className={compact ? "block" : "block md:col-span-2"}>

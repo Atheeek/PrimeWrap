@@ -112,7 +112,7 @@ function Contact() {
               <div className="grid grid-cols-2 gap-8">
                 <div>
                   <div className="text-[9px] uppercase tracking-widest text-gray-400 font-semibold mb-1">Direct</div>
-                  <a href="tel:+971500000000" className="text-sm font-medium hover:text-orange transition-colors">+971 50 000 0000</a>
+                  <a href="tel:+971521263146" className="text-sm font-medium hover:text-orange transition-colors">+971 521263146</a>
                 </div>
                 <div>
                   <div className="text-[9px] uppercase tracking-widest text-gray-400 font-semibold mb-1">Email</div>

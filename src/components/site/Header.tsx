@@ -283,8 +283,8 @@ export function Header() {
                 transition={{ delay: 0.4 }}
                 className="absolute bottom-0 left-0 w-full p-8 border-t border-navy/10 flex justify-between items-center bg-[#f8f7f5]"
               >
-                <a href="tel:+971501234567" className="text-xs font-semibold uppercase tracking-widest text-navy">
-                  +971 50 123 4567
+                <a href="tel:+971521263146" className="text-xs font-semibold uppercase tracking-widest text-navy">
+                  +971 521263146
                 </a>
                 <Link
                   to="/contact"
@@ -342,8 +342,8 @@ export function Header() {
                   <a href="mailto:info@primewrap.ae" className="hover:text-orange transition-colors flex items-center gap-3">
                     <ArrowRight className="w-4 h-4 text-orange" /> info@primewrap.ae
                   </a>
-                  <a href="tel:+971501234567" className="hover:text-orange transition-colors flex items-center gap-3">
-                    <span className="text-sm font-semibold tracking-wider">+971 50 123 4567</span>
+                  <a href="tel:+971521263146" className="hover:text-orange transition-colors flex items-center gap-3">
+                    <span className="text-sm font-semibold tracking-wider">+971 521263146</span>
                   </a>
                 </div>
 

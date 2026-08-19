@@ -57,6 +57,7 @@ export const pages: PageMeta[] = [
   {
     description: "PrimeWrap privacy policy — how we collect, use and protect your personal information.",
     path: "/privacy-policy",
+    title: ""
   },
   {
     title: "Terms & Conditions | PrimeWrap",
