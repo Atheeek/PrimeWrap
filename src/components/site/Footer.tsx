@@ -25,7 +25,7 @@ export function Footer() {
               className="group relative inline-flex items-center justify-center gap-4 bg-white text-navy px-8 py-5 overflow-hidden transition-colors hover:bg-gray-100 mt-6 lg:mt-0"
             >
               <span className="text-base font-semibold uppercase tracking-widest relative z-10">
-                Start Your Project
+                Get a Free Quote
               </span>
               <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-2 transition-transform" />
               <div className="absolute inset-0 bg-orange translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
