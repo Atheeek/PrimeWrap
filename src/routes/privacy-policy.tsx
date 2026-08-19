@@ -23,7 +23,7 @@ function PrivacyPolicy() {
               <span className="w-8 h-[1px] bg-orange" />
               Legal
             </p>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[0.9] tracking-tighter uppercase text-navy">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-[0.9] tracking-tighter uppercase text-navy">
               Privacy Policy
             </h1>
           </div>

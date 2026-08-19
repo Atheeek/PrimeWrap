@@ -39,6 +39,9 @@ import newKitchen3 from "@/assets/gallery-kitchen-3.jpeg";
 import newKitchen4 from "@/assets/gallery-kitchen-4.jpeg";
 import newKitchen5 from "@/assets/gallery-kitchen-5.jpeg";
 
+import doorLightImg from "@/assets/door_light.jpeg";
+import doorDarkImg from "@/assets/door_dark.jpeg";
+
 import wardrobeBeforeImg from "@/assets/wardrobe_before.jpeg";
 import wardrobeAfterImg from "@/assets/wardrobe_after.jpeg";
 
@@ -119,6 +122,8 @@ const recentWork: Omit<MediaItem, "span" | "id">[] = [
   { type: "image", src: newKitchen5, categories: ["Kitchens"] },
   { type: "image", src: wardrobeBeforeImg, categories: ["Furniture", "Transformations"] },
   { type: "image", src: wardrobeAfterImg, categories: ["Furniture", "Transformations"] },
+  { type: "image", src: doorLightImg, categories: ["Doors", "Transformations"] },
+  { type: "image", src: doorDarkImg, categories: ["Doors", "Transformations"] },
 ];
 
 const videos: Omit<MediaItem, "span" | "id">[] = [
@@ -210,7 +215,7 @@ function Gallery() {
               Our Work
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] font-semibold text-navy tracking-tighter leading-[0.9] uppercase mb-8">
+            <h1 className="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-semibold text-navy tracking-tighter leading-[0.9] uppercase mb-8">
               Surfaces, <br />
               <span className="text-gray-400">Reimagined.</span>
             </h1>
@@ -282,7 +287,7 @@ function Gallery() {
 
       {/* ===================== FINAL CTA ===================== */}
       <section className="py-24 md:py-32 px-6 md:px-12 border-t border-navy/10 bg-white flex flex-col items-center text-center">
-        <h2 className="text-4xl md:text-6xl font-semibold uppercase tracking-tighter text-navy leading-[0.95] mb-12">
+        <h2 className="text-3xl md:text-5xl font-semibold uppercase tracking-tighter text-navy leading-[0.95] mb-12">
           Your Space <br />
           Could Be Next.
         </h2>

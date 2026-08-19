@@ -66,7 +66,7 @@ function ThankYou() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-semibold uppercase tracking-tight text-center mb-6"
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold uppercase tracking-tight text-center mb-6"
           >
             Enquiry Received.
           </motion.h1>

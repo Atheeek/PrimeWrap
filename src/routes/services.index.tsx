@@ -39,7 +39,7 @@ function Services() {
                     The Capabilities
                   </span>
                 </div>
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold text-navy leading-[0.95] tracking-tighter uppercase font-display">
+                <h1 className="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-semibold text-navy leading-[0.95] tracking-tighter uppercase font-display">
                   Architectural <br />
                   Surface Solutions.
                 </h1>
@@ -81,7 +81,7 @@ function Services() {
                     </div>
                     
                     <div className="translate-y-2 md:translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]">
-                      <h3 className="text-3xl md:text-4xl font-semibold text-white mb-2 md:mb-4 font-display uppercase tracking-tight">
+                      <h3 className="text-2xl md:text-3xl font-semibold text-white mb-2 md:mb-4 font-display uppercase tracking-tight">
                         {service.title}
                       </h3>
                       <p className="text-white/70 text-sm md:text-base font-light leading-relaxed mb-4 md:mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-3 md:line-clamp-none">

@@ -42,7 +42,7 @@ function PhilosophySection() {
             <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-orange mb-6">
               The Idea
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-navy leading-[1.05] tracking-tight uppercase font-display max-w-2xl mb-8">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-navy leading-[1.05] tracking-tight uppercase font-display max-w-2xl mb-8">
               A space doesn't always need to be rebuilt.
             </h2>
           </Reveal>
@@ -99,14 +99,14 @@ function ComparisonSection() {
             <button 
               onMouseEnter={() => setActiveTab("traditional")}
               onClick={() => setActiveTab("traditional")}
-              className={`text-left text-4xl md:text-5xl font-semibold uppercase font-display transition-colors duration-500 ${activeTab === "traditional" ? "text-navy" : "text-gray-300"}`}
+              className={`text-left text-3xl md:text-4xl font-semibold uppercase font-display transition-colors duration-500 ${activeTab === "traditional" ? "text-navy" : "text-gray-300"}`}
             >
               Traditional <br/>Renovation
             </button>
             <button 
               onMouseEnter={() => setActiveTab("wrapping")}
               onClick={() => setActiveTab("wrapping")}
-              className={`text-left text-4xl md:text-5xl font-semibold uppercase font-display transition-colors duration-500 ${activeTab === "wrapping" ? "text-navy" : "text-gray-300"}`}
+              className={`text-left text-3xl md:text-4xl font-semibold uppercase font-display transition-colors duration-500 ${activeTab === "wrapping" ? "text-navy" : "text-gray-300"}`}
             >
               Interior <br/>Wrapping
             </button>
@@ -199,7 +199,7 @@ function MaterialShowroom() {
           <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/50 mb-8">
             The Material
           </div>
-          <h2 className="text-4xl md:text-6xl font-semibold text-white uppercase font-display max-w-md leading-none mb-6">
+          <h2 className="text-3xl md:text-5xl font-semibold text-white uppercase font-display max-w-md leading-none mb-6">
             The surface changes everything.
           </h2>
           <p className="text-white/70 font-light text-lg max-w-sm leading-relaxed">
@@ -212,7 +212,7 @@ function MaterialShowroom() {
             <button
               key={m.name}
               onMouseEnter={() => setActiveMat(idx)}
-              className={`text-2xl md:text-4xl lg:text-5xl font-semibold uppercase font-display tracking-tight transition-all duration-300 text-left md:text-right w-full ${activeMat === idx ? "text-white translate-x-0" : "text-white/30 hover:text-white/60 md:translate-x-4"}`}
+              className={`text-xl md:text-3xl lg:text-4xl font-semibold uppercase font-display tracking-tight transition-all duration-300 text-left md:text-right w-full ${activeMat === idx ? "text-white translate-x-0" : "text-white/30 hover:text-white/60 md:translate-x-4"}`}
             >
               {m.name}
             </button>
@@ -258,7 +258,7 @@ function DetailHotspots() {
           <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-orange mb-6">
             The Craft
           </div>
-          <h2 className="text-4xl md:text-5xl font-semibold text-navy uppercase font-display tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-semibold text-navy uppercase font-display tracking-tight">
             Built around the details.
           </h2>
         </Reveal>
@@ -326,7 +326,7 @@ function FinalCTA() {
   return (
     <section className="py-32 md:py-48 px-6 bg-white border-t border-navy/5 text-center">
       <Reveal className="max-w-4xl mx-auto flex flex-col items-center">
-        <h2 className="text-5xl md:text-7xl lg:text-[6rem] font-semibold text-navy uppercase font-display leading-[0.9] tracking-tighter mb-12">
+        <h2 className="text-4xl md:text-6xl lg:text-[5.5rem] font-semibold text-navy uppercase font-display leading-[0.9] tracking-tighter mb-12">
           The next <br/> <span className="text-gray-300">transformation.</span>
         </h2>
         <Link

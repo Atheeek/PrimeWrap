@@ -62,7 +62,7 @@ const HowWeDoIt = () => {
               </span>
             </div>
 
-            <h2 className="mb-8 text-5xl font-semibold uppercase leading-[0.9] tracking-tighter text-navy md:text-7xl">
+            <h2 className="mb-8 text-4xl font-semibold uppercase leading-[0.95] tracking-tighter text-navy md:text-5xl lg:text-6xl xl:text-7xl">
               From Idea
               <br />
               <span className="text-gray-400">To Finish.</span>
@@ -322,14 +322,16 @@ const HowWeDoIt = () => {
                           <h3
                             className="
                               max-w-[620px]
-                              text-4xl
+                              text-3xl
                               font-semibold
                               uppercase
                               leading-[0.88]
                               tracking-tighter
                               text-navy
-                              md:text-5xl
-                              lg:text-6xl
+                              transition-colors
+                              duration-500
+                              md:text-4xl
+                              lg:text-5xl
                             "
                           >
                             {step.title}

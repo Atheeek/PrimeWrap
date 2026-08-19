@@ -32,7 +32,7 @@ function Blog() {
               </span>
             </div>
             <div className="grid items-end gap-8 lg:grid-cols-[1fr_0.5fr]">
-              <h1 className="max-w-3xl text-5xl font-bold leading-[0.94] text-navy md:text-7xl">
+              <h1 className="max-w-3xl text-4xl md:text-5xl lg:text-6xl font-bold leading-[0.94] text-navy">
                 Practical ideas for more considered interiors.
               </h1>
               <p className="max-w-md text-sm leading-relaxed text-navy/60">
@@ -61,7 +61,7 @@ function Blog() {
                 <p className="text-xs font-bold uppercase tracking-[0.22em] text-orange">
                   Featured · {featured.category}
                 </p>
-                <h2 className="mt-4 max-w-xl text-3xl font-bold leading-tight md:text-5xl">
+                <h2 className="mt-4 max-w-xl text-2xl md:text-4xl font-bold leading-tight">
                   {featured.title}
                 </h2>
                 <p className="mt-5 max-w-lg text-sm leading-relaxed text-white/65">

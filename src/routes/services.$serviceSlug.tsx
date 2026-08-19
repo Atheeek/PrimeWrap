@@ -61,7 +61,7 @@ function ServiceDetail() {
                     <span className="w-8 h-[1px] bg-orange" />
                     {service.eyebrow}
                   </p>
-                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[0.95] tracking-tighter uppercase text-navy mb-8 font-display">
+                  <h1 className="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-semibold leading-[0.95] tracking-tighter uppercase text-navy mb-8 font-display">
                     {service.title}
                   </h1>
                   <p className="text-lg md:text-xl font-light leading-relaxed text-gray-500 max-w-xl mb-12">

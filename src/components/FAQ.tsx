@@ -60,7 +60,7 @@ export default function FAQ() {
                 Helpful answers
               </span>
             </div>
-            <h2 className="max-w-md text-4xl md:text-5xl lg:text-6xl font-semibold leading-[0.95] tracking-tighter uppercase font-display text-navy mb-6">
+            <h2 className="max-w-md text-3xl md:text-4xl lg:text-5xl font-semibold leading-[0.95] tracking-tighter uppercase font-display text-navy mb-6">
               Questions, <br /> answered clearly.
             </h2>
             <p className="max-w-sm text-base font-light leading-relaxed text-gray-500">

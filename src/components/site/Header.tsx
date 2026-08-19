@@ -130,11 +130,10 @@ export function Header() {
       {!isDesktop && !mobileMenuOpen && (
         <header className="site-header-mobile fixed top-0 inset-x-0 z-[100]">
           <div
-            className={`flex items-center justify-between h-[88px] w-full px-5 transition-all duration-300 ${
-              isScrolled || !isHome
-                ? "bg-white shadow-[0_4px_20px_rgba(20,35,70,0.12)]"
-                : "bg-white/95 backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.08)]"
-            }`}
+            className={`flex items-center justify-between h-[88px] w-full px-5 transition-all duration-300 ${isScrolled || !isHome
+              ? "bg-white/90 backdrop-blur-lg shadow-[0_4px_20px_rgba(20,35,70,0.12)]"
+              : "bg-white/75 backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.08)]"
+              }`}
           >
             <Link to="/" className="flex items-center h-full">
               <Logo size="mobile" className="ml-[-4px]" />
@@ -166,7 +165,7 @@ export function Header() {
         >
           {/* Full-width flush container */}
           <div
-            className={`relative w-full min-h-[80px] flex items-center justify-between px-6 xl:px-12 transition-all duration-500 bg-white shadow-[0_4px_24px_rgba(20,35,70,0.08)] border-b border-gray-100`}
+            className={`relative w-full min-h-[80px] flex items-center justify-between px-6 xl:px-12 transition-all duration-500 bg-white/85 backdrop-blur-lg shadow-[0_4px_24px_rgba(20,35,70,0.08)] border-b border-gray-100/50`}
           >
             {/* Left: Menu */}
             <div className="flex items-center z-[110] flex-1 min-w-0">
@@ -188,7 +187,7 @@ export function Header() {
                 </button>
               </Magnetic>
 
-              </div>
+            </div>
 
             {/* Center: Logo */}
             <Link
@@ -277,7 +276,7 @@ export function Header() {
               </div>
 
               {/* Mobile Footer Area inside Menu */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -287,8 +286,8 @@ export function Header() {
                 <a href="tel:+971501234567" className="text-xs font-semibold uppercase tracking-widest text-navy">
                   +971 50 123 4567
                 </a>
-                <Link 
-                  to="/contact" 
+                <Link
+                  to="/contact"
                   onClick={() => setMobileMenuOpen(false)}
                   className="text-xs font-semibold uppercase tracking-widest text-orange"
                 >
@@ -330,15 +329,15 @@ export function Header() {
                   <span className="w-8 h-[1px] bg-orange" />
                   Contact Studio
                 </div>
-                 
-                <h3 className="text-3xl lg:text-4xl font-semibold mb-6 tracking-tight uppercase leading-tight font-display">
-                  Ready to <br/><span className="text-white/40">Transform?</span>
+
+                <h3 className="text-2xl lg:text-3xl font-semibold mb-6 tracking-tight uppercase leading-tight font-display">
+                  Ready to <br /><span className="text-white/40">Transform?</span>
                 </h3>
-                 
+
                 <p className="text-white/60 font-light mb-12 max-w-sm text-sm lg:text-base leading-relaxed">
                   Reach out to discuss your project. We bring premium architectural wraps to Dubai, UAE.
                 </p>
-                 
+
                 <div className="flex flex-col gap-6 font-semibold uppercase tracking-widest text-[10px] lg:text-xs pointer-events-auto">
                   <a href="mailto:info@primewrap.ae" className="hover:text-orange transition-colors flex items-center gap-3">
                     <ArrowRight className="w-4 h-4 text-orange" /> info@primewrap.ae
@@ -397,7 +396,7 @@ export function Header() {
                         <span className="text-xs font-semibold text-orange tracking-widest tabular-nums mt-1.5">
                           {String(idx + 1).padStart(2, "0")}
                         </span>
-                        <span className="text-4xl xl:text-5xl font-semibold text-navy uppercase tracking-tighter leading-none group-hover:text-orange transition-colors group-hover:translate-x-4 duration-500 ease-out flex-1">
+                        <span className="text-3xl xl:text-4xl font-semibold text-navy uppercase tracking-tighter leading-none group-hover:text-orange transition-colors group-hover:translate-x-4 duration-500 ease-out flex-1">
                           {link.name}
                         </span>
                         <ArrowRight className="w-5 h-5 text-orange opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />

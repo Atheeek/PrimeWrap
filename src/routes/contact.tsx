@@ -78,7 +78,7 @@ function Contact() {
               <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-orange mb-6">
                 Start a transformation
               </div>
-              <h1 className="text-5xl lg:text-[4rem] font-semibold leading-[0.95] tracking-tighter uppercase mb-6">
+              <h1 className="text-4xl md:text-5xl lg:text-[4rem] font-semibold leading-[0.95] tracking-tighter uppercase mb-6">
                 Your Space.<br />
                 Your Surface.<br />
                 <span className="text-gray-400">Your Next Move.</span>
@@ -349,7 +349,7 @@ function Contact() {
             <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-orange mb-4">
               What Happens Next?
             </div>
-            <h2 className="text-4xl font-semibold uppercase tracking-tight leading-none">
+            <h2 className="text-3xl md:text-4xl font-semibold uppercase tracking-tight leading-none">
               The Process.
             </h2>
           </div>

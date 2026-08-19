@@ -13,7 +13,7 @@ export function Footer() {
               <span className="w-8 h-[1px] bg-orange" />
               The Next Step
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-[0.9] tracking-tighter uppercase text-white">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-[0.9] tracking-tighter uppercase text-white">
               Ready To <br />
               <span className="text-white/40">Transform</span> <br />
               Your Space?
@@ -45,7 +45,7 @@ export function Footer() {
                 className="
                   select-none
                   whitespace-nowrap
-                  text-4xl md:text-5xl lg:text-[4rem]
+                  text-3xl md:text-4xl lg:text-[3.5rem]
                   font-semibold
                   uppercase
                   leading-[0.75]

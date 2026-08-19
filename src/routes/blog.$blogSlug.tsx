@@ -53,7 +53,7 @@ function BlogPostDetail() {
               <p className="text-xs font-bold uppercase tracking-[0.24em] text-orange mb-4">
                 {post.category} · {post.readingTime}
               </p>
-              <h1 className="text-3xl font-bold leading-[1.2] text-navy md:text-5xl mb-6">
+              <h1 className="text-2xl font-bold leading-[1.2] text-navy md:text-4xl mb-6">
                 {post.title}
               </h1>
               <p className="text-lg text-navy/60 leading-relaxed mb-8 max-w-3xl">

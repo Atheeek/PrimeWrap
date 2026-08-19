@@ -127,7 +127,8 @@ export const ServicesSection = () => {
               Our Expertise
             </span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-semibold text-navy tracking-tight">
+          <span className="h-[2px] w-12 bg-orange mt-2" />
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-semibold text-navy tracking-tight whitespace-nowrap">
             Every surface, wrapped to last.
           </h2>
         </div>
@@ -152,7 +153,7 @@ export const ServicesSection = () => {
                 */}
                 <div className="flex items-center gap-6 md:gap-10 w-full lg:w-auto">
                   <h3
-                    className="text-4xl md:text-6xl lg:text-[5.5rem] leading-none font-semibold uppercase tracking-tight"
+                    className="text-3xl md:text-5xl lg:text-6xl xl:text-[5.5rem] leading-none font-semibold uppercase tracking-tight"
                   >
                     <TextRoll text={service.title} isActive={isActive} />
                   </h3>

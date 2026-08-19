@@ -65,7 +65,7 @@ const BookNow = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-              className="text-5xl lg:text-7xl font-semibold leading-[0.95] tracking-tighter uppercase text-navy mb-8"
+              className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-[0.95] tracking-tighter uppercase text-navy mb-8"
             >
               Ready To <br />
               <span className="text-gray-400">Transform</span> <br />

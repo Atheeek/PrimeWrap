@@ -1,5 +1,5 @@
 import bathroom from "@/assets/banner-bathroom.jpeg";
-import doors from "@/assets/gallery10.jpeg";
+import doors from "@/assets/door_dark.jpeg";
 import kitchen from "@/assets/banner-kitchen.jpeg";
 import wardrobe from "@/assets/Wardrobe.jpeg";
 import furniture from "@/assets/gallery-kitchen-2.jpeg";

@@ -148,7 +148,7 @@ export default function AboutOurWrap() {
             <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-orange mb-6">
               The PrimeWrap Difference
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-[4rem] font-semibold text-navy leading-[1.05] tracking-tight uppercase font-display max-w-md">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-[4rem] font-semibold text-navy leading-[1.05] tracking-tight uppercase font-display max-w-md">
               A smarter way to transform.
             </h2>
           </Reveal>
